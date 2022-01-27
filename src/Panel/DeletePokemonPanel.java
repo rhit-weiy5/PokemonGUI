@@ -1,5 +1,6 @@
 package Panel;
 
+import Database.DatabaseConnection;
 import Listener.*;
 import javax.swing.*;
 import java.awt.*;
@@ -8,8 +9,10 @@ public class DeletePokemonPanel extends JPanel {
 
     private JTextField pidTextField = null;
     private JButton deleteButton = null;
+    private DatabaseConnection db;
 
-    public DeletePokemonPanel(){
+    public DeletePokemonPanel(DatabaseConnection db){
+        this.db = db;
         this.setLayout(new BorderLayout());
 
         this.pidTextField = new JTextField();
@@ -22,7 +25,7 @@ public class DeletePokemonPanel extends JPanel {
         layout.setHgap(15);
         this.setLayout(layout);
 
-        deleteButton.addActionListener(new DeleteListener());
+        deleteButton.addActionListener(new DeleteListener(db, pidTextField));
 
         this.add(new JLabel("Delete a Pokemon:          "));
         this.add(new JLabel("PID"));

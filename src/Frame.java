@@ -136,7 +136,7 @@ public class Frame extends JFrame {
         tilePanel.add(titleLabel);
         JPanel createPanel = new CreatePokemonPanel();
         JPanel updatePanel = new UpdatePokemonPanel();
-        JPanel deletePanel = new DeletePokemonPanel();
+        JPanel deletePanel = new DeletePokemonPanel(db);
         cPanel.add(tilePanel);
         cPanel.add(createPanel);
         cPanel.add(updatePanel);
