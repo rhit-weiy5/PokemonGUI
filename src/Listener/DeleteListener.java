@@ -12,9 +12,11 @@ import java.sql.SQLException;
 public class DeleteListener implements ActionListener {
 
     private DatabaseConnection db;
+    private JTextField pidTextField;
 
     public DeleteListener(DatabaseConnection db, JTextField pid){
         this.db = db;
+        this.pidTextField = pid;
     }
 
     @Override
@@ -22,8 +24,9 @@ public class DeleteListener implements ActionListener {
         PreparedStatement stmt = null;
         try {
             stmt = db.getConnection().prepareStatement("EXEC delete_pokemon @PID = ?");
-
-            //stmt.setInt(1, x);
+            int x = Integer.parseInt(pidTextField.getText());
+            stmt.setInt(1, x);
+            stmt.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
