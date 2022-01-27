@@ -7,6 +7,12 @@ public class Frame extends JFrame {
     private JMenu mainMenu;
     private JMenuItem pokemonList;
     private JMenuItem changePokemon;
+    private JMenu wikiMenu;
+    private JMenuItem pokedex;
+    private JMenuItem items;
+    private JMenuItem moves;
+    private JMenuItem abilities;
+
     private JMenu helpMenu;
     private JMenuItem help;
     private JPanel containerPanel;
@@ -16,6 +22,8 @@ public class Frame extends JFrame {
     private JPanel curPanel;
 
     public Frame(){
+
+        //initialization
         this.setSize(960, 540);
         this.setResizable(false);
         this.setTitle("Pokemon");
@@ -26,6 +34,8 @@ public class Frame extends JFrame {
         this.hPanel = new HelpPanel();
         this.hPanel.setVisible(false);
         this.curPanel = pPanel;
+
+        //main menu
         this.mainMenu = new JMenu("Screens");
         this.pokemonList = new JMenuItem("Pokemon List");
         this.pokemonList.addActionListener(new ActionListener() {
@@ -41,6 +51,19 @@ public class Frame extends JFrame {
         });
         this.mainMenu.add(this.pokemonList);
         this.mainMenu.add(this.changePokemon);
+
+        //wiki menu
+        this.wikiMenu = new JMenu("Wiki");
+        this.pokedex = new JMenuItem("Pokédex");
+        this.items = new JMenuItem("Items");
+        this.moves = new JMenuItem("Moves");
+        this.abilities = new JMenuItem("Abilities");
+        this.wikiMenu.add(pokedex);
+        this.wikiMenu.add(items);
+        this.wikiMenu.add(moves);
+        this.wikiMenu.add(abilities);
+
+        //help menu
         this.helpMenu = new JMenu("Help");
         this.help = new JMenuItem("How to Use");
         this.help.addActionListener(new ActionListener() {
@@ -49,9 +72,12 @@ public class Frame extends JFrame {
             }
         });
         this.helpMenu.add(help);
+
         JMenuBar menuBar = new JMenuBar();
         menuBar.add(this.mainMenu);
+        menuBar.add(this.wikiMenu);
         menuBar.add(this.helpMenu);
+
         this.containerPanel.add(this.pPanel);
         this.containerPanel.add(this.cPanel);
         this.containerPanel.add(this.hPanel);
@@ -61,7 +87,6 @@ public class Frame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
         this.pack();
-
     }
 
     private void switchToPokemonList() {
