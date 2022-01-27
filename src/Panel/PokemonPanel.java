@@ -40,14 +40,19 @@ public class PokemonPanel extends JPanel {
         this.levelTextField = new JTextField();
         this.trainerTextField = new JComboBox<>();
 
+        //Set dimension
         this.pidTextField.setPreferredSize(new Dimension(75, 25));
         this.specieComboBox.setPreferredSize(new Dimension(100, 25));
         this.genderComboBox.setPreferredSize(new Dimension(50, 25));
         this.levelTextField.setPreferredSize(new Dimension(30, 25));
         this.trainerTextField.setPreferredSize(new Dimension(80,25));
+
+        //Set layout
         FlowLayout layout = new FlowLayout();
         layout.setHgap(15);
         fPanel.setLayout(layout);
+
+        //add stuff
         fPanel.add(new JLabel("PID"));
         fPanel.add(this.pidTextField);
         fPanel.add(new JLabel("Specie"));
