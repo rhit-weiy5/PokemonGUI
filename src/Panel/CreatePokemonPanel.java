@@ -7,8 +7,12 @@ import java.awt.*;
 public class CreatePokemonPanel extends JPanel {
 
     private JTextField name = null;
-    private JComboBox<String> specieComboBox = null;
+    private JTextField TrainerIDBox = new JTextField();
+    private JTextField NameBox = new JTextField();
+    private JTextField AbilityIDBox = new JTextField();
     private JTextField levelTextField = null;
+    private JComboBox<String> specieComboBox = null;
+    private JComboBox<String> GenderBox = new JComboBox<>();
     private JButton createButton = null;
 
     public CreatePokemonPanel(){
@@ -18,6 +22,11 @@ public class CreatePokemonPanel extends JPanel {
         this.createButton = new JButton("Create");
 
         this.specieComboBox.setPreferredSize(new Dimension(100,25));
+        this.GenderBox.setPreferredSize(new Dimension(100,25));
+        this.levelTextField.setPreferredSize(new Dimension(30, 25));
+        this.TrainerIDBox.setPreferredSize(new Dimension(30, 25));
+        this.AbilityIDBox.setPreferredSize(new Dimension(30, 25));
+        this.NameBox.setPreferredSize(new Dimension(30, 25));
         this.levelTextField.setPreferredSize(new Dimension(30, 25));
         this.createButton.setPreferredSize(new Dimension(80,25));
 
@@ -25,13 +34,18 @@ public class CreatePokemonPanel extends JPanel {
         layout.setHgap(15);
         this.setLayout(layout);
 
-        createButton.addActionListener(new CreateListener());
+        this.add(new JLabel("Create a Pokemon:"));
 
-        this.add(new JLabel("Create a Pokemon:          "));
-        this.add(new JLabel("Specie"));
-        this.add(specieComboBox);
-        this.add(new JLabel("Level"));
-        this.add(levelTextField);
+    	this.add(new JLabel("TrainerID"));
+        this.add(TrainerIDBox);
+        
+        this.add(new JLabel("Name"));
+        this.add(NameBox);
+        
+        this.add(new JLabel("Gender"));
+        this.add(GenderBox);
+        
+        createButton.addActionListener(new CreateListener());
         this.add(createButton);
     }
 }
