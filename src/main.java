@@ -8,9 +8,10 @@ public class main {
     private static String password = "Womeiyoumima123";
 
     public static void main(String[] args){
-        Frame frame = new Frame();
         DatabaseConnection db = new DatabaseConnection(serverName, databaseName);
         db.connect(username, password);
+        Frame frame = new Frame(db);
+
     }
 
 }

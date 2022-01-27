@@ -7,6 +7,7 @@ import java.awt.*;
 
 public class PokemonPanel extends JPanel {
 
+
     private JTextField pidTextField = null;
     private JComboBox<String> specieComboBox = null;
     private JComboBox<String> genderComboBox = null;
@@ -16,10 +17,11 @@ public class PokemonPanel extends JPanel {
     private JButton filterButton = null;
     private JTable pokemonTable = null;
     private JScrollPane sPane;
-    private DatabaseConnection db;
+    private DatabaseConnection db = null;
 
 
-    public PokemonPanel(){
+    public PokemonPanel(DatabaseConnection db){
+        this.db = db;
         this.filterPanel = generateFilterUiItems();
         this.sPane = generatePokemonTable();
         this.setLayout(new BorderLayout());
@@ -66,7 +68,7 @@ public class PokemonPanel extends JPanel {
         fPanel.add(new JLabel("Trainer"));
         fPanel.add(this.trainerTextField);
         this.filterButton = new JButton("Search");
-        filterButton.addActionListener(new SearchListener());
+        filterButton.addActionListener(new SearchListener(db));
         fPanel.add(this.filterButton);
         return fPanel;
     }

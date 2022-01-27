@@ -1,3 +1,4 @@
+import Database.DatabaseConnection;
 import Panel.*;
 import javax.swing.*;
 import java.awt.*;
@@ -5,6 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Frame extends JFrame {
+
+    private DatabaseConnection db = null;
+
     private JMenu mainMenu;
     private JMenuItem pokemonList;
     private JMenuItem changePokemon;
@@ -22,14 +26,16 @@ public class Frame extends JFrame {
     private HelpPanel hPanel;
     private JPanel curPanel;
 
-    public Frame(){
+    public Frame(DatabaseConnection db){
 
         //initialization
+        this.db = db;
+
         this.setSize(960, 540);
         this.setResizable(false);
         this.setTitle("Pokemon");
         this.containerPanel = new JPanel();
-        this.pPanel = new PokemonPanel();
+        this.pPanel = new PokemonPanel(db);
         this.cPanel = getChangePanel();
         this.cPanel.setVisible(false);
         this.hPanel = new HelpPanel();
