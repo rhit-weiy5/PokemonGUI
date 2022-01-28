@@ -135,7 +135,7 @@ public class Frame extends JFrame {
         titleLabel.setFont(new Font("Calibri", Font.BOLD, 20));
         tilePanel.add(titleLabel);
         JPanel createPanel = new CreatePokemonPanel(db);
-        JPanel updatePanel = new UpdatePokemonPanel();
+        JPanel updatePanel = new UpdatePokemonPanel(db);
         JPanel deletePanel = new DeletePokemonPanel(db);
         cPanel.add(tilePanel);
         cPanel.add(createPanel);
