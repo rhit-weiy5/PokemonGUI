@@ -5,8 +5,7 @@ import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import Database.DatabaseConnection;
 
@@ -32,6 +31,10 @@ public class CreateListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		create();
+	}
+
+	public boolean create(){
 		PreparedStatement stmt = null;
 		try {
 			stmt = db.getConnection().prepareStatement(
@@ -49,8 +52,12 @@ public class CreateListener implements ActionListener {
 			stmt.setInt(4, Integer.parseInt(SpecieIDField.getText()));
 			stmt.setInt(5, Integer.parseInt(AbilityIDField.getText()));
 			stmt.execute();
+			JOptionPane.showMessageDialog(null, "Create Successful");
+			return true;
+
 		} catch (SQLException ex) {
 			ex.printStackTrace();
+			return false;
 		}
 	}
 }
