@@ -128,13 +128,13 @@ public class Frame extends JFrame {
     public JPanel getChangePanel(){
         JPanel cPanel = new JPanel();
         GridLayout layout = new GridLayout(4, 1);
-        layout.setVgap(70);
+        layout.setVgap(30);
         cPanel.setLayout(layout);
         JPanel tilePanel = new JPanel();
         JLabel titleLabel = new JLabel("Here you can create, update or delete a Pokemon");
         titleLabel.setFont(new Font("Calibri", Font.BOLD, 20));
         tilePanel.add(titleLabel);
-        JPanel createPanel = new CreatePokemonPanel();
+        JPanel createPanel = new CreatePokemonPanel(db);
         JPanel updatePanel = new UpdatePokemonPanel();
         JPanel deletePanel = new DeletePokemonPanel(db);
         cPanel.add(tilePanel);
