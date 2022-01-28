@@ -4,6 +4,10 @@ import Database.DatabaseConnection;
 import Listener.*;
 import javax.swing.*;
 import java.awt.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 public class PokemonPanel extends JPanel {
 
@@ -30,10 +34,42 @@ public class PokemonPanel extends JPanel {
     }
 
     private JScrollPane generatePokemonTable() {
-        this.pokemonTable = new JTable();
-        JScrollPane scrollPane = new JScrollPane(this.pokemonTable);
-        this.pokemonTable.setFillsViewportHeight(true);
-        return scrollPane;
+    	Statement stmt;
+		try {		
+			stmt = this.db.getConnection().createStatement();
+			ResultSet countrs = stmt.executeQuery("SELECT PID From Pokémon");
+			int count=0;
+			while(countrs.next()) {
+				count++;
+			}
+			
+			ResultSet rs = stmt.executeQuery("SELECT PID, Pokémon.Name as Pname, Pokémon.Gender as Pgender, Level, Friendship, Species.SpecieName as SName, Ability.Name as AName, Trainer.Name as TName From Pokémon JOIN Trainer on Trainer.ID = Pokémon.TrainerID JOIN Ability on Pokémon.AbilityID = Ability.ID Join Species on Pokémon.SpecieID = Species.ID");	
+			String[][] rec = new String[count][8];
+			String[] header = { "PID", "Name", "Gender", "Level", "Friendship", "SpecieName", "AbilityName", "TrainerName"};
+			int index =0;
+	    	while(rs.next()) {
+	    		rec[index][0]=rs.getString("PID");
+	    		rec[index][1]=rs.getString("Pname");
+	    		if(rs.getInt("Pgender")==1) {
+	    			rec[index][2]="Female";
+	    		}else {
+	    			rec[index][2]="Male";
+	    		}
+	    		rec[index][3]=rs.getString("Level");
+	    		rec[index][4]=rs.getString("Friendship");
+	    		rec[index][5]=rs.getString("SName");
+	    		rec[index][6]=rs.getString("AName");
+	    		rec[index][7]=rs.getString("TName");
+	    		index++;	    		
+	    	}
+	        this.pokemonTable = new JTable(rec,header);
+	        JScrollPane scrollPane = new JScrollPane(this.pokemonTable);
+	        this.pokemonTable.setFillsViewportHeight(true);
+	        return scrollPane;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sPane;
     }
 
     private JPanel generateFilterUiItems() {
@@ -43,11 +79,17 @@ public class PokemonPanel extends JPanel {
         this.genderComboBox = new JComboBox<>();
         this.levelTextField = new JTextField();
         this.trainerTextField = new JComboBox<>();
+        getSpecie();
+        getTrainer();
+        this.genderComboBox.addItem("None");
+        this.genderComboBox.addItem("Male");
+        this.genderComboBox.addItem("Female");
+        this.genderComboBox.addItem("NULL");
 
         //Set dimension
         this.pidTextField.setPreferredSize(new Dimension(75, 25));
         this.specieComboBox.setPreferredSize(new Dimension(100, 25));
-        this.genderComboBox.setPreferredSize(new Dimension(50, 25));
+        this.genderComboBox.setPreferredSize(new Dimension(60, 25));
         this.levelTextField.setPreferredSize(new Dimension(30, 25));
         this.trainerTextField.setPreferredSize(new Dimension(80,25));
 
@@ -72,4 +114,29 @@ public class PokemonPanel extends JPanel {
         fPanel.add(this.filterButton);
         return fPanel;
     }
+    public void getSpecie() {	
+    	this.specieComboBox.addItem("None");
+		try {
+			Statement stmt = this.db.getConnection().createStatement();
+			ResultSet rs = stmt.executeQuery(" SELECT DISTINCT SpecieName From Pokémon JOIN Species on Species.ID = Pokémon.SpecieID");
+			while(rs.next()) {
+				this.specieComboBox.addItem(rs.getString("SpecieName"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+	}
+    public void getTrainer() {	
+    	this.trainerTextField.addItem("None");
+		try {
+			Statement stmt = this.db.getConnection().createStatement();
+			ResultSet rs = stmt.executeQuery(" SELECT DISTINCT Trainer.Name as trainername From Pokémon JOIN Trainer on Trainer.ID = Pokémon.TrainerID");
+			while(rs.next()) {
+				this.trainerTextField.addItem(rs.getString("trainername"));
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+	}
 }
