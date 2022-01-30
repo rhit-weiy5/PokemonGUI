@@ -38,7 +38,7 @@ public class CreateListener implements ActionListener {
 		PreparedStatement stmt = null;
 		try {
 			stmt = db.getConnection().prepareStatement(
-					"EXEC get_new_pokemon @TrainerID = ?, @Name = ?, @Gender = ?, @SpecieID = ?,@AbilityID = ?");
+					"EXEC get_new_pokemon @TrainerID = ?, @Name = ?, @Gender = ?, @SpeciesID = ?,@AbilityID = ?");
 			stmt.setInt(1, Integer.parseInt(TrainerIDField.getText()));
 			stmt.setString(2, NameField.getText());
 			if(GenderField.getSelectedItem().equals("Male")){
