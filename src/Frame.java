@@ -98,10 +98,12 @@ public class Frame extends JFrame {
 
     private void switchToPokemonList() {
         JPanel tmp = this.curPanel;
-        if (this.pPanel != this.curPanel) {
-            this.curPanel = this.pPanel;
+//        if (this.pPanel != this.curPanel) {
+            this.curPanel = new PokemonPanel(db);
+            this.containerPanel.add(this.curPanel);
             this.switchPanel(tmp);
-        }
+            
+//        }
     }
 
     private void switchToChangePokemon() {

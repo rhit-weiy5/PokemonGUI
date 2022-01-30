@@ -37,13 +37,13 @@ public class PokemonPanel extends JPanel {
     	Statement stmt;
 		try {		
 			stmt = this.db.getConnection().createStatement();
-			ResultSet countrs = stmt.executeQuery("SELECT PID From Pokémon");
+			ResultSet countrs = stmt.executeQuery("SELECT PID From Pokemon");
 			int count=0;
 			while(countrs.next()) {
 				count++;
 			}
 			
-			ResultSet rs = stmt.executeQuery("SELECT PID, Pokémon.Name as Pname, Pokémon.Gender as Pgender, Level, Friendship, Species.SpecieName as SName, Ability.Name as AName, Trainer.Name as TName From Pokémon JOIN Trainer on Trainer.ID = Pokémon.TrainerID JOIN Ability on Pokémon.AbilityID = Ability.ID Join Species on Pokémon.SpecieID = Species.ID");	
+			ResultSet rs = stmt.executeQuery("SELECT PID, Pokemon.Name as Pname, Pokemon.Gender as Pgender, Level, Friendship, Species.SpecieName as SName, Ability.Name as AName, Trainer.Name as TName From Pokemon JOIN Trainer on Trainer.ID = Pokemon.TrainerID JOIN Ability on Pokemon.AbilityID = Ability.ID Join Species on Pokemon.SpecieID = Species.ID");
 			String[][] rec = new String[count][8];
 			String[] header = { "PID", "Name", "Gender", "Level", "Friendship", "SpecieName", "AbilityName", "TrainerName"};
 			int index =0;
@@ -118,7 +118,7 @@ public class PokemonPanel extends JPanel {
     	this.specieComboBox.addItem("None");
 		try {
 			Statement stmt = this.db.getConnection().createStatement();
-			ResultSet rs = stmt.executeQuery(" SELECT DISTINCT SpecieName From Pokémon JOIN Species on Species.ID = Pokémon.SpecieID");
+			ResultSet rs = stmt.executeQuery(" SELECT DISTINCT SpecieName From Pokemon JOIN Species on Species.ID = Pokemon.SpecieID");
 			while(rs.next()) {
 				this.specieComboBox.addItem(rs.getString("SpecieName"));
 			}
@@ -130,7 +130,7 @@ public class PokemonPanel extends JPanel {
     	this.trainerTextField.addItem("None");
 		try {
 			Statement stmt = this.db.getConnection().createStatement();
-			ResultSet rs = stmt.executeQuery(" SELECT DISTINCT Trainer.Name as trainername From Pokémon JOIN Trainer on Trainer.ID = Pokémon.TrainerID");
+			ResultSet rs = stmt.executeQuery(" SELECT DISTINCT Trainer.Name as trainername From Pokemon JOIN Trainer on Trainer.ID = Pokemon.TrainerID");
 			while(rs.next()) {
 				this.trainerTextField.addItem(rs.getString("trainername"));
 
