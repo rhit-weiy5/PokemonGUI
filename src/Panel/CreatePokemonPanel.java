@@ -81,10 +81,10 @@ public class CreatePokemonPanel extends JPanel {
 		layout.setHgap(15);
 		this.setLayout(layout);
 
-		this.add(new JLabel("AbilityID"));
+		this.add(new JLabel("Ability (1-265)"));
 		this.add(AbilityIDBox);
 
-		this.add(new JLabel("Specie"));
+		this.add(new JLabel("Specie (1-1034)"));
 		this.add(specieComboBox);
 
 		this.add(createButton);
