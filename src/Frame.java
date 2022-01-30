@@ -61,7 +61,7 @@ public class Frame extends JFrame {
 
         //wiki menu
         this.wikiMenu = new JMenu("Wiki");
-        this.pokedex = new JMenuItem("Pokédex");
+        this.pokedex = new JMenuItem("Pokedex");
         this.items = new JMenuItem("Items");
         this.moves = new JMenuItem("Moves");
         this.abilities = new JMenuItem("Abilities");

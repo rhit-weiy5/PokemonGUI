@@ -118,7 +118,7 @@ public class PokemonPanel extends JPanel {
     	this.specieComboBox.addItem("None");
 		try {
 			Statement stmt = this.db.getConnection().createStatement();
-			ResultSet rs = stmt.executeQuery(" SELECT DISTINCT Pokemon1.Name From Pokemon1 JOIN Pokedex on Pokedex.ID = Pokemon1.SpeciesID");
+			ResultSet rs = stmt.executeQuery(" SELECT DISTINCT Pokedex.Name From Pokemon1 JOIN Pokedex on Pokedex.ID = Pokemon1.SpeciesID");
 			while(rs.next()) {
 				this.specieComboBox.addItem(rs.getString("Name"));
 			}
