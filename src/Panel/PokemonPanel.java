@@ -43,8 +43,9 @@ public class PokemonPanel extends JPanel {
 				count++;
 			}
 			
-			ResultSet rs = stmt.executeQuery("SELECT PID, Pokemon1.Name as Pname, Pokemon1.Gender as Pgender, Level, Friendship, Pokedex.Name as SName, Ability1.Name as AName, Trainer.Name as TName From Pokemon1 JOIN Trainer on Trainer.ID = Pokemon1.TrainerID JOIN Ability1 on Pokemon1.AbilityID = Ability1.ID Join Pokedex on Pokemon1.SpeciesID = Pokedex.ID");
-			String[][] rec = new String[count][8];
+			//ResultSet rs = stmt.executeQuery("SELECT PID, Pokemon1.Name as Pname, Pokemon1.Gender as Pgender, Level, Friendship, Pokedex.Name as SName, Ability1.Name as AName, Trainer.Name as TName From Pokemon1 JOIN Trainer on Trainer.ID = Pokemon1.TrainerID JOIN Ability1 on Pokemon1.AbilityID = Ability1.ID Join Pokedex on Pokemon1.SpeciesID = Pokedex.ID");
+			ResultSet rs = stmt.executeQuery("Select * From search_pokemon()");
+            String[][] rec = new String[count][8];
 			String[] header = { "PID", "Name", "Gender", "Level", "Friendship", "SpecieName", "AbilityName", "TrainerName"};
 			int index =0;
 	    	while(rs.next()) {
