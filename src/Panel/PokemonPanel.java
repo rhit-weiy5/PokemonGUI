@@ -66,6 +66,15 @@ public class PokemonPanel extends JPanel {
 	        this.pokemonTable = new JTable(rec,header);
 	        JScrollPane scrollPane = new JScrollPane(this.pokemonTable);
 	        this.pokemonTable.setFillsViewportHeight(true);
+            this.pokemonTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+            this.pokemonTable.getColumnModel().getColumn(1).setPreferredWidth(80);
+            this.pokemonTable.getColumnModel().getColumn(2).setPreferredWidth(50);
+            this.pokemonTable.getColumnModel().getColumn(3).setPreferredWidth(50);
+            this.pokemonTable.getColumnModel().getColumn(4).setPreferredWidth(55);
+            this.pokemonTable.getColumnModel().getColumn(5).setPreferredWidth(200);
+            this.pokemonTable.getColumnModel().getColumn(6).setPreferredWidth(150);
+            this.pokemonTable.getColumnModel().getColumn(7).setPreferredWidth(100);
+
 	        return scrollPane;
 		} catch (SQLException e) {
 			e.printStackTrace();
