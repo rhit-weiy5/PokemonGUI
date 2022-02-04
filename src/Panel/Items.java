@@ -14,10 +14,15 @@ public class Items extends JPanel{
 
     public Items(DatabaseConnection db) {
         // TODO Auto-generated constructor stub
+        JPanel borderLayoutPanel = new JPanel(new BorderLayout());
         this.db = db;
         this.sPane = Pokedextable();
-        this.setLayout(new BorderLayout());
-        this.add(sPane, "Center");
+        borderLayoutPanel.add(this.sPane, BorderLayout.CENTER);
+        JFrame frame = new JFrame("Items");
+        frame.getContentPane().add(borderLayoutPanel);
+        frame.setSize(1100, 800);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     private JScrollPane Pokedextable() {
@@ -44,6 +49,11 @@ public class Items extends JPanel{
             this.dextable = new JTable(rec,header);
             JScrollPane scrollPane = new JScrollPane(this.dextable);
             this.dextable.setFillsViewportHeight(true);
+            this.dextable.setFillsViewportHeight(true);
+            this.dextable.getColumnModel().getColumn(0).setPreferredWidth(40);
+            this.dextable.getColumnModel().getColumn(1).setPreferredWidth(130);
+            this.dextable.getColumnModel().getColumn(2).setPreferredWidth(130);
+            this.dextable.getColumnModel().getColumn(3).setPreferredWidth(800);
             return scrollPane;
         } catch (SQLException e) {
             e.printStackTrace();

@@ -1,13 +1,11 @@
 package Panel;
 
 import Database.DatabaseConnection;
-import Listener.*;
 import javax.swing.*;
 import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 public class Pokedex extends JPanel{
     private DatabaseConnection db = null;
@@ -16,10 +14,15 @@ public class Pokedex extends JPanel{
 
     public Pokedex(DatabaseConnection db) {
         // TODO Auto-generated constructor stub
+        JPanel borderLayoutPanel = new JPanel(new BorderLayout());
         this.db = db;
         this.sPane = Pokedextable();
-        this.setLayout(new BorderLayout());
-        this.add(sPane, "Center");
+        borderLayoutPanel.add(this.sPane, BorderLayout.CENTER);
+        JFrame frame = new JFrame("Pokedex");
+        frame.getContentPane().add(borderLayoutPanel);
+        frame.setSize(800, 800);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     private JScrollPane Pokedextable() {
@@ -34,7 +37,7 @@ public class Pokedex extends JPanel{
 
             ResultSet rs = stmt.executeQuery("Select * From Pokedex");
             String[][] rec = new String[count][12];
-            String[] header = { "ID", "SpeciesID", "Name", "Type1", "Type2", "Total", "HP", "Attack", "Defense", "Sp_Atk", "Sp_Def", "Speed"};
+            String[] header = { "ID", "No.", "Name", "Type1", "Type2", "Total", "HP", "Attack", "Defense", "Sp_Atk", "Sp_Def", "Speed"};
             int index =0;
             while(rs.next()) {
                 rec[index][0]=rs.getString("ID");
@@ -54,6 +57,18 @@ public class Pokedex extends JPanel{
             this.dextable = new JTable(rec,header);
             JScrollPane scrollPane = new JScrollPane(this.dextable);
             this.dextable.setFillsViewportHeight(true);
+            this.dextable.getColumnModel().getColumn(0).setPreferredWidth(60);
+            this.dextable.getColumnModel().getColumn(1).setPreferredWidth(60);
+            this.dextable.getColumnModel().getColumn(2).setPreferredWidth(330);
+            this.dextable.getColumnModel().getColumn(3).setPreferredWidth(80);
+            this.dextable.getColumnModel().getColumn(4).setPreferredWidth(80);
+            this.dextable.getColumnModel().getColumn(5).setPreferredWidth(80);
+            this.dextable.getColumnModel().getColumn(6).setPreferredWidth(80);
+            this.dextable.getColumnModel().getColumn(7).setPreferredWidth(80);
+            this.dextable.getColumnModel().getColumn(8).setPreferredWidth(80);
+            this.dextable.getColumnModel().getColumn(9).setPreferredWidth(80);
+            this.dextable.getColumnModel().getColumn(10).setPreferredWidth(80);
+            this.dextable.getColumnModel().getColumn(11).setPreferredWidth(80);
             return scrollPane;
         } catch (SQLException e) {
             e.printStackTrace();

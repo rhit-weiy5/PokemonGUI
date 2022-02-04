@@ -14,10 +14,15 @@ public class Ability extends JPanel{
 
     public Ability(DatabaseConnection db) {
         // TODO Auto-generated constructor stub
+        JPanel borderLayoutPanel = new JPanel(new BorderLayout());
         this.db = db;
         this.sPane = Pokedextable();
-        this.setLayout(new BorderLayout());
-        this.add(sPane, "Center");
+        borderLayoutPanel.add(this.sPane, BorderLayout.CENTER);
+        JFrame frame = new JFrame("Ability");
+        frame.getContentPane().add(borderLayoutPanel);
+        frame.setSize(800, 800);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     private JScrollPane Pokedextable() {
@@ -45,6 +50,11 @@ public class Ability extends JPanel{
             this.dextable = new JTable(rec,header);
             JScrollPane scrollPane = new JScrollPane(this.dextable);
             this.dextable.setFillsViewportHeight(true);
+            this.dextable.getColumnModel().getColumn(0).setPreferredWidth(50);
+            this.dextable.getColumnModel().getColumn(1).setPreferredWidth(100);
+            this.dextable.getColumnModel().getColumn(2).setPreferredWidth(50);
+            this.dextable.getColumnModel().getColumn(3).setPreferredWidth(550);
+            this.dextable.getColumnModel().getColumn(4).setPreferredWidth(50);
             return scrollPane;
         } catch (SQLException e) {
             e.printStackTrace();
