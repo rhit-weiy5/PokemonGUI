@@ -24,7 +24,12 @@ public class Frame extends JFrame {
     private PokemonPanel pPanel;
     private JPanel cPanel;
     private HelpPanel hPanel;
+    private Pokedex dexPanel;
+    private Items iPanel;
+    private Moves mPanel;
+    private Ability aPanel;
     private JPanel curPanel;
+
 
     public Frame(DatabaseConnection db){
 
@@ -40,6 +45,14 @@ public class Frame extends JFrame {
         this.cPanel.setVisible(false);
         this.hPanel = new HelpPanel();
         this.hPanel.setVisible(false);
+        this.dexPanel = new Pokedex(db);
+        this.dexPanel.setVisible(false);
+        this.iPanel = new Items(db);
+        this.iPanel.setVisible(false);
+        this.mPanel = new Moves(db);
+        this.mPanel.setVisible(false);
+        this.aPanel = new Ability(db);
+        this.aPanel.setVisible(false);
         this.curPanel = pPanel;
 
         //main menu
@@ -62,9 +75,33 @@ public class Frame extends JFrame {
         //wiki menu
         this.wikiMenu = new JMenu("Wiki");
         this.pokedex = new JMenuItem("Pokedex");
+        this.pokedex.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Frame.this.switchToPokedex();
+            }
+        });
         this.items = new JMenuItem("Items");
+        this.items.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Frame.this.switchToItems();
+            }
+        });
         this.moves = new JMenuItem("Moves");
+        this.moves.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Frame.this.switchToMoves();
+            }
+        });
         this.abilities = new JMenuItem("Abilities");
+        this.abilities.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Frame.this.switchToAbility();
+            }
+        });
         this.wikiMenu.add(pokedex);
         this.wikiMenu.add(items);
         this.wikiMenu.add(moves);
@@ -88,6 +125,10 @@ public class Frame extends JFrame {
         this.containerPanel.add(this.pPanel);
         this.containerPanel.add(this.cPanel);
         this.containerPanel.add(this.hPanel);
+        this.containerPanel.add(this.dexPanel);
+        this.containerPanel.add(this.iPanel);
+        this.containerPanel.add(this.mPanel);
+        this.containerPanel.add(this.aPanel);
         this.add(menuBar, "North");
         this.add(this.containerPanel, "Center");
         this.add(new JLabel("  This GUI is made by Qijun Jiang, James Li and Yunzhe Wei"), "South");
@@ -110,6 +151,36 @@ public class Frame extends JFrame {
         JPanel tmp = this.curPanel;
         if (this.cPanel != this.curPanel) {
             this.curPanel = this.cPanel;
+            this.switchPanel(tmp);
+        }
+    }
+
+    private void switchToPokedex() {
+        JPanel tmp = this.curPanel;
+        if (this.dexPanel != this.curPanel) {
+            this.curPanel = this.dexPanel;
+            this.switchPanel(tmp);
+        }
+    }
+    private void switchToItems() {
+        JPanel tmp = this.curPanel;
+        if (this.iPanel != this.curPanel) {
+            this.curPanel = this.iPanel;
+            this.switchPanel(tmp);
+        }
+    }
+    private void switchToMoves() {
+        JPanel tmp = this.curPanel;
+        if (this.mPanel != this.curPanel) {
+            this.curPanel = this.mPanel;
+            this.switchPanel(tmp);
+        }
+    }
+
+    private void switchToAbility() {
+        JPanel tmp = this.curPanel;
+        if (this.aPanel != this.curPanel) {
+            this.curPanel = this.aPanel;
             this.switchPanel(tmp);
         }
     }
