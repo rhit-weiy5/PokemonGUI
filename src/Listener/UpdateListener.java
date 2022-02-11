@@ -33,7 +33,8 @@ public class UpdateListener implements ActionListener {
 	            stmt = db.getConnection().prepareCall("{call update_pokemon (@PID = ?, @Name = ?)}");
 	            stmt.setInt(1, Integer.parseInt(pidTextField.getText()));
 	            stmt.setString(2, NameField.getText());
-	            
+	            pidTextField.setText("");
+	            JOptionPane.showMessageDialog(null, "The specific PID has been successfully update.");
 	            stmt.execute();
 	            return true;
 	        } catch (SQLException ex) {

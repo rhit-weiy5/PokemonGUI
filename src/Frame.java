@@ -34,12 +34,11 @@ public class Frame extends JFrame {
 
 		// initialization
 		this.db = db;
-
-		this.setSize(960, 540);
-		this.setLocationRelativeTo(null);
-		this.setResizable(false);
+		this.setSize(1920, 1080);
+//		this.setResizable(false);
 		this.setUndecorated(true);
 		this.getRootPane().setWindowDecorationStyle(JRootPane.WARNING_DIALOG);
+		//this.setIconImage(Toolkit.getDefaultToolkit().createImage("Pikachu.jpg"));
 		this.setTitle("Pokemon");
 		this.containerPanel = new JPanel();
 		this.pPanel = new PokemonPanel(db, this);
@@ -115,10 +114,12 @@ public class Frame extends JFrame {
 		menuBar.add(this.mainMenu);
 		menuBar.add(this.wikiMenu);
 		menuBar.add(this.helpMenu);
-
+		this.rootPane.setPreferredSize(new Dimension(1260, 720));
+		this.pPanel.setPreferredSize(new Dimension(1230, 720));
 		this.containerPanel.add(this.pPanel);
 		this.containerPanel.add(this.cPanel);
 		this.containerPanel.add(this.hPanel);
+		System.out.println(this);
 		this.add(menuBar, "North");
 		this.add(this.containerPanel, "Center");
 		this.add(new JLabel("  This GUI is made by Qijun Jiang, James Li and Yunzhe Wei"), "South");
@@ -131,6 +132,7 @@ public class Frame extends JFrame {
 		JPanel tmp = this.curPanel;
 //        if (this.pPanel != this.curPanel) {
 		this.curPanel = new PokemonPanel(db, this);
+		this.curPanel.setPreferredSize(new Dimension(1230, 720));
 		this.containerPanel.add(this.curPanel);
 		this.switchPanel(tmp);
 	}

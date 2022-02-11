@@ -26,7 +26,7 @@ public class DeletePokemonPanel extends JPanel {
         this.setLayout(layout);
 
         deleteButton.addActionListener(new DeleteListener(db, pidTextField));
-
+        repaint();
         this.add(new JLabel("Delete a Pokemon:          "));
         this.add(new JLabel("PID"));
         this.add(pidTextField);

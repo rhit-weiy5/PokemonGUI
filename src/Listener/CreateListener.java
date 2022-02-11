@@ -52,6 +52,12 @@ public class CreateListener implements ActionListener {
 			stmt.setInt(4, Integer.parseInt(SpecieIDField.getText()));
 			stmt.setInt(5, Integer.parseInt(AbilityIDField.getText()));
 			stmt.execute();
+			TrainerIDField.setText("");
+			NameField.setText("");
+			GenderField.setSelectedItem(null);
+			AbilityIDField.setText("");
+			SpecieIDField.setText("");
+			
 			JOptionPane.showMessageDialog(null, "Create Successful");
 			return true;
 

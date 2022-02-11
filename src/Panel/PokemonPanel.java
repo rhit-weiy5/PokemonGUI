@@ -105,9 +105,9 @@ public class PokemonPanel extends JPanel {
 
 			rs = stmt.executeQuery(temp);
 
-			String[][] rec = new String[count][8];
+			String[][] rec = new String[count][14];
 			String[] header = { "PID", "Name", "Gender", "Level", "Friendship", "SpecieName", "AbilityName",
-					"TrainerName" };
+					"TrainerName", "BaseHP", "BaseATK", "BaseDEF", "BaseSPA", "BaseSPD", "BaseSPE" };
 			int index = 0;
 			while (rs.next()) {
 				rec[index][0] = rs.getString("PID");
@@ -126,6 +126,12 @@ public class PokemonPanel extends JPanel {
 				rec[index][5] = rs.getString("SName");
 				rec[index][6] = rs.getString("AName");
 				rec[index][7] = rs.getString("TName");
+				rec[index][8] = rs.getString("BaseHP");
+				rec[index][9] = rs.getString("BaseATK");
+				rec[index][10] = rs.getString("BaseDEF");
+				rec[index][11] = rs.getString("BaseSPA");
+				rec[index][12] = rs.getString("BaseSPD");
+				rec[index][13] = rs.getString("BaseSPE");
 				index++;
 			}
 			this.pokemonTable = new JTable(rec, header);

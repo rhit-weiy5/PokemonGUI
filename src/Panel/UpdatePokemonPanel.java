@@ -39,5 +39,6 @@ public class UpdatePokemonPanel extends JPanel {
 		this.add(NameTextField1);
 		this.add(updateButton);
 		updateButton.addActionListener(new UpdateListener(db, NameTextField, NameTextField1));
+		repaint();
 	}
 }

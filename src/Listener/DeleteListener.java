@@ -32,7 +32,7 @@ public class DeleteListener implements ActionListener {
         try {
             stmt = db.getConnection().prepareCall("{call delete_pokemon (@PID = ?)}");
             int x = 0;
-
+            
             try {
                 x = Integer.parseInt(pidTextField.getText());
             } catch (NumberFormatException e) {
@@ -42,6 +42,8 @@ public class DeleteListener implements ActionListener {
             }
             stmt.setInt(1, x);
             stmt.execute();
+            pidTextField.setText("");
+            JOptionPane.showMessageDialog(null, "The specific PID has been deleted.");
             return true;
 
         } catch (SQLException ex) {
