@@ -47,11 +47,11 @@ public class Pokedex extends JPanel{
                 rec[index][4]=rs.getString("Type2");
                 rec[index][5]=rs.getString("Total");
                 rec[index][6]=rs.getString("HP");
-                rec[index][7]=rs.getString("Attack");
-                rec[index][8]=rs.getString("Defense");
-                rec[index][9]=rs.getString("Sp_Atk");
-                rec[index][10]=rs.getString("Sp_Def");
-                rec[index][11]=rs.getString("Speed");
+                rec[index][7]=rs.getString("ATK");
+                rec[index][8]=rs.getString("DEF");
+                rec[index][9]=rs.getString("SPA");
+                rec[index][10]=rs.getString("SPD");
+                rec[index][11]=rs.getString("SPE");
                 index++;
             }
             this.dextable = new JTable(rec,header);
