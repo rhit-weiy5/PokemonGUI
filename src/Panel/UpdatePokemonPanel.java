@@ -10,7 +10,7 @@ import java.awt.*;
 public class UpdatePokemonPanel extends JPanel {
 	private JTextField pid = null;
 	private JTextField NameTextField = null;
-	private JTextField NameTextField1 = null;
+	private JTextField LevelTextField = null;
 	private JButton updateButton = null;
 	private DatabaseConnection db;
 
@@ -19,12 +19,12 @@ public class UpdatePokemonPanel extends JPanel {
 		this.db = db;
 		this.pid = new JTextField();
 		this.NameTextField = new JTextField();
-		this.NameTextField1 = new JTextField();
+		this.LevelTextField = new JTextField();
 		this.updateButton = new JButton("Update");
 
-		this.pid.setPreferredSize(new Dimension(100, 25));
+		this.pid.setPreferredSize(new Dimension(60, 25));
 		this.NameTextField.setPreferredSize(new Dimension(30, 25));
-		this.NameTextField1.setPreferredSize(new Dimension(60, 25));
+		this.LevelTextField.setPreferredSize(new Dimension(30, 25));
 		this.updateButton.setPreferredSize(new Dimension(80, 25));
 
 		FlowLayout layout = new FlowLayout();
@@ -34,11 +34,13 @@ public class UpdatePokemonPanel extends JPanel {
 
 		this.add(new JLabel("Update a Pokemon:          "));
 		this.add(new JLabel("pid"));
-		this.add(NameTextField);
+		this.add(pid);
 		this.add(new JLabel("Name"));
-		this.add(NameTextField1);
+		this.add(NameTextField);
+		this.add(new JLabel("Level"));
+		this.add(LevelTextField);
 		this.add(updateButton);
-		updateButton.addActionListener(new UpdateListener(db, NameTextField, NameTextField1));
+		updateButton.addActionListener(new UpdateListener(db, pid, NameTextField, LevelTextField));
 		repaint();
 	}
 }
