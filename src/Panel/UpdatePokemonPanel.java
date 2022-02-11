@@ -23,7 +23,7 @@ public class UpdatePokemonPanel extends JPanel {
 		this.updateButton = new JButton("Update");
 
 		this.pid.setPreferredSize(new Dimension(60, 25));
-		this.NameTextField.setPreferredSize(new Dimension(30, 25));
+		this.NameTextField.setPreferredSize(new Dimension(80, 25));
 		this.LevelTextField.setPreferredSize(new Dimension(30, 25));
 		this.updateButton.setPreferredSize(new Dimension(80, 25));
 

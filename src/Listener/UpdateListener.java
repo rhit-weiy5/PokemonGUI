@@ -38,6 +38,8 @@ public class UpdateListener implements ActionListener {
 				stmt.setInt(3, Integer.parseInt(LevelField.getText()));
 
 	            pidTextField.setText("");
+	            NameField.setText("");
+	            LevelField.setText("");
 	            JOptionPane.showMessageDialog(null, "The specific PID has been successfully update.");
 	            stmt.execute();
 	            return true;

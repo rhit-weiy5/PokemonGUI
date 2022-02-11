@@ -192,7 +192,7 @@ public class Frame extends JFrame {
 
 	public JPanel getChangePanel() {
 		JPanel cPanel = new JPanel();
-		GridLayout layout = new GridLayout(4, 1);
+		GridLayout layout = new GridLayout(5, 1);
 		layout.setVgap(30);
 		cPanel.setLayout(layout);
 		JPanel tilePanel = new JPanel();
@@ -202,10 +202,13 @@ public class Frame extends JFrame {
 		JPanel createPanel = new CreatePokemonPanel(db);
 		JPanel updatePanel = new UpdatePokemonPanel(db);
 		JPanel deletePanel = new DeletePokemonPanel(db);
+		JPanel AddRandomPanel = new AddRandomPanel(db);
 		cPanel.add(tilePanel);
+
 		cPanel.add(createPanel);
 		cPanel.add(updatePanel);
 		cPanel.add(deletePanel);
+		cPanel.add(AddRandomPanel);
 		return cPanel;
 	}
 }
