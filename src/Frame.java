@@ -36,10 +36,10 @@ public class Frame extends JFrame {
 		this.db = db;
 
 		this.setSize(960, 540);
+		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setUndecorated(true);
 		this.getRootPane().setWindowDecorationStyle(JRootPane.WARNING_DIALOG);
-		//this.setIconImage(Toolkit.getDefaultToolkit().createImage("Pikachu.jpg"));
 		this.setTitle("Pokemon");
 		this.containerPanel = new JPanel();
 		this.pPanel = new PokemonPanel(db, this);

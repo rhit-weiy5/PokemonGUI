@@ -19,6 +19,8 @@ public class Pokedex extends JPanel{
         this.sPane = Pokedextable();
         borderLayoutPanel.add(this.sPane, BorderLayout.CENTER);
         JFrame frame = new JFrame("Pokedex");
+        frame.setUndecorated(true);
+        frame.getRootPane().setWindowDecorationStyle(JRootPane.WARNING_DIALOG);
         frame.getContentPane().add(borderLayoutPanel);
         frame.setSize(800, 800);
         frame.setLocationRelativeTo(null);

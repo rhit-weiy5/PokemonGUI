@@ -19,6 +19,8 @@ public class Items extends JPanel{
         this.sPane = Pokedextable();
         borderLayoutPanel.add(this.sPane, BorderLayout.CENTER);
         JFrame frame = new JFrame("Items");
+        frame.setUndecorated(true);
+        frame.getRootPane().setWindowDecorationStyle(JRootPane.WARNING_DIALOG);
         frame.getContentPane().add(borderLayoutPanel);
         frame.setSize(1100, 800);
         frame.setLocationRelativeTo(null);
