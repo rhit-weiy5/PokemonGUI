@@ -36,72 +36,66 @@ public class PokemonPanel extends JPanel {
 	private JScrollPane generatePokemonTable() {
 		Statement stmt;
 		try {
-			String temp = "Select * From search_pokemon()";
+			String select = "Select * From search_pokemon()";
 			if (!this.pidTextField.getText().equals("") && this.pidTextField.getText() != null) {
-				temp += (" WHERE PID=" + this.pidTextField.getText());
+				select += (" WHERE PID=" + this.pidTextField.getText());
 			}
 
 			if (!this.specieComboBox.getSelectedItem().equals("None")
 					&& this.specieComboBox.getSelectedItem() != null) {
-				if (temp.indexOf("WHERE") == -1) {
-					temp += (" WHERE SName='" + this.specieComboBox.getSelectedItem() + "'");
+				if (select.indexOf("WHERE") == -1) {
+					select += (" WHERE SName='" + this.specieComboBox.getSelectedItem() + "'");
 				} else {
-					temp += (" AND SName='" + this.specieComboBox.getSelectedItem() + "'");
+					select += (" AND SName='" + this.specieComboBox.getSelectedItem() + "'");
 				}
 			}
 
 			if (!this.genderComboBox.getSelectedItem().equals("None")
 					&& this.genderComboBox.getSelectedItem() != null) {
-				if (temp.indexOf("WHERE") == -1) {
+				if (select.indexOf("WHERE") == -1) {
 					if (this.genderComboBox.getSelectedItem().equals("NULL")) {
-						temp += (" WHERE PGender is null");
+						select += (" WHERE PGender is null");
 					} else if (this.genderComboBox.getSelectedItem().equals("Male")) {
-						temp += (" WHERE PGender=0");
+						select += (" WHERE PGender=0");
 					} else if (this.genderComboBox.getSelectedItem().equals("Female")) {
-						temp += (" WHERE PGender=1");
+						select += (" WHERE PGender=1");
 					}
 				} else {
 					if (this.genderComboBox.getSelectedItem().equals("NULL")) {
-						temp += (" AND PGender is null");
+						select += (" AND PGender is null");
 					} else if (this.genderComboBox.getSelectedItem().equals("Male")) {
-						temp += (" AND PGender=0");
+						select += (" AND PGender=0");
 					} else if (this.genderComboBox.getSelectedItem().equals("Female")) {
-						temp += (" AND PGender=1");
+						select += (" AND PGender=1");
 					}
 				}
 			}
 
 			if (!this.levelTextField.getText().equals("") && this.levelTextField.getText() != null) {
-				if (temp.indexOf("WHERE") == -1) {
-					temp += (" WHERE Level=" + this.levelTextField.getText());
+				if (select.indexOf("WHERE") == -1) {
+					select += (" WHERE Level=" + this.levelTextField.getText());
 				} else {
-					temp += (" AND Level>=" + this.levelTextField.getText());
+					select += (" AND Level>=" + this.levelTextField.getText());
 				}
 			}
 
 			if (!this.trainerTextField.getSelectedItem().equals("None")
 					&& this.trainerTextField.getSelectedItem() != null) {
-				if (temp.indexOf("WHERE") == -1) {
-					temp += (" WHERE TName='" + this.trainerTextField.getSelectedItem() + "'");
+				if (select.indexOf("WHERE") == -1) {
+					select += (" WHERE TName='" + this.trainerTextField.getSelectedItem() + "'");
 				} else {
-					temp += (" AND TName='" + this.trainerTextField.getSelectedItem() + "'");
+					select += (" AND TName='" + this.trainerTextField.getSelectedItem() + "'");
 				}
 			}
 
 			stmt = this.db.getConnection().createStatement();
-			ResultSet rs = stmt.executeQuery(temp);
+			ResultSet rs = stmt.executeQuery(select);
 			int count = 0;
 			while (rs.next()) {
 				count++;
 			}
 
-			// ResultSet rs = stmt.executeQuery("SELECT PID, Pokemon1.Name as Pname,
-			// Pokemon1.Gender as Pgender, Level, Friendship, Pokedex.Name as SName,
-			// Ability1.Name as AName, Trainer.Name as TName From Pokemon1 JOIN Trainer on
-			// Trainer.ID = Pokemon1.TrainerID JOIN Ability1 on Pokemon1.AbilityID =
-			// Ability1.ID Join Pokedex on Pokemon1.SpeciesID = Pokedex.ID");
-
-			rs = stmt.executeQuery(temp);
+			rs = stmt.executeQuery(select);
 
 			String[][] rec = new String[count][15];
 			String[] header = { "PID", "Name", "Gender", "Level", "Nature", "Friendship", "SpecieName", "AbilityName",

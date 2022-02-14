@@ -124,7 +124,6 @@ public class Frame extends JFrame {
 
 	private void switchToPokemonList() {
 		JPanel tmp = this.curPanel;
-//        if (this.pPanel != this.curPanel) {
 		this.curPanel = new PokemonPanel(db, this);
 		this.curPanel.setPreferredSize(new Dimension(1230, 720));
 		this.containerPanel.add(this.curPanel);
@@ -141,34 +140,26 @@ public class Frame extends JFrame {
 
 	private void switchToPokedex() {
 		JPanel tmp = this.curPanel;
-		if (true) {
-			new Pokedex(db);
-			this.switchPanel(tmp);
-		}
+		new Pokedex(db);
+		this.switchPanel(tmp);
 	}
 
 	private void switchToItems() {
 		JPanel tmp = this.curPanel;
-		if (true) {
-			new Items(db);
-			this.switchPanel(tmp);
-		}
+		new Items(db);
+		this.switchPanel(tmp);
 	}
 
 	private void switchToMoves() {
 		JPanel tmp = this.curPanel;
-		if (true) {
-			new Moves(db);
-			this.switchPanel(tmp);
-		}
+		new Moves(db);
+		this.switchPanel(tmp);
 	}
 
 	private void switchToAbility() {
 		JPanel tmp = this.curPanel;
-		if (true) {
-			new Ability(db);
-			this.switchPanel(tmp);
-		}
+		new Ability(db);
+		this.switchPanel(tmp);
 	}
 
 	private void switchToHelp() {
