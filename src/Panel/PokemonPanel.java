@@ -105,9 +105,9 @@ public class PokemonPanel extends JPanel {
 
 			rs = stmt.executeQuery(temp);
 
-			String[][] rec = new String[count][14];
-			String[] header = { "PID", "Name", "Gender", "Level", "Friendship", "SpecieName", "AbilityName",
-					"TrainerName", "BaseHP", "BaseATK", "BaseDEF", "BaseSPA", "BaseSPD", "BaseSPE" };
+			String[][] rec = new String[count][15];
+			String[] header = { "PID", "Name", "Gender", "Level", "Nature", "Friendship", "SpecieName", "AbilityName",
+					"TrainerName", "HP", "ATK", "DEF", "SPA", "SPD", "SPE" };
 			int index = 0;
 			while (rs.next()) {
 				rec[index][0] = rs.getString("PID");
@@ -122,16 +122,17 @@ public class PokemonPanel extends JPanel {
 					rec[index][2] = "MALE";
 				}
 				rec[index][3] = rs.getString("Level");
-				rec[index][4] = rs.getString("Friendship");
-				rec[index][5] = rs.getString("SName");
-				rec[index][6] = rs.getString("AName");
-				rec[index][7] = rs.getString("TName");
-				rec[index][8] = rs.getString("BaseHP");
-				rec[index][9] = rs.getString("BaseATK");
-				rec[index][10] = rs.getString("BaseDEF");
-				rec[index][11] = rs.getString("BaseSPA");
-				rec[index][12] = rs.getString("BaseSPD");
-				rec[index][13] = rs.getString("BaseSPE");
+				rec[index][4] = rs.getString("Nature");
+				rec[index][5] = rs.getString("Friendship");
+				rec[index][6] = rs.getString("SName");
+				rec[index][7] = rs.getString("AName");
+				rec[index][8] = rs.getString("TName");
+				rec[index][9] = rs.getString("HP");
+				rec[index][10] = rs.getString("ATK");
+				rec[index][11] = rs.getString("DEF");
+				rec[index][12] = rs.getString("SPA");
+				rec[index][13] = rs.getString("SPD");
+				rec[index][14] = rs.getString("SPE");
 				index++;
 			}
 			this.pokemonTable = new JTable(rec, header);
@@ -139,11 +140,11 @@ public class PokemonPanel extends JPanel {
 			this.pokemonTable.setFillsViewportHeight(true);
 			this.pokemonTable.getColumnModel().getColumn(0).setPreferredWidth(50);
 			this.pokemonTable.getColumnModel().getColumn(1).setPreferredWidth(80);
-			this.pokemonTable.getColumnModel().getColumn(2).setPreferredWidth(50);
+			this.pokemonTable.getColumnModel().getColumn(2).setPreferredWidth(80);
 			this.pokemonTable.getColumnModel().getColumn(3).setPreferredWidth(50);
 			this.pokemonTable.getColumnModel().getColumn(4).setPreferredWidth(55);
-			this.pokemonTable.getColumnModel().getColumn(5).setPreferredWidth(200);
-			this.pokemonTable.getColumnModel().getColumn(6).setPreferredWidth(150);
+			this.pokemonTable.getColumnModel().getColumn(5).setPreferredWidth(55);
+			this.pokemonTable.getColumnModel().getColumn(6).setPreferredWidth(250);
 			this.pokemonTable.getColumnModel().getColumn(7).setPreferredWidth(100);
 
 			return scrollPane;
