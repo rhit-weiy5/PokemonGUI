@@ -24,10 +24,6 @@ public class Frame extends JFrame {
 	private PokemonPanel pPanel;
 	private JPanel cPanel;
 	private HelpPanel hPanel;
-//    private Pokedex dexPanel;
-//    private Items iPanel;
-//    private Moves mPanel;
-//    private Ability aPanel;
 	public JPanel curPanel;
 
 	public Frame(DatabaseConnection db) {
@@ -35,10 +31,8 @@ public class Frame extends JFrame {
 		// initialization
 		this.db = db;
 		this.setSize(1920, 1080);
-//		this.setResizable(false);
 		this.setUndecorated(true);
 		this.getRootPane().setWindowDecorationStyle(JRootPane.WARNING_DIALOG);
-		//this.setIconImage(Toolkit.getDefaultToolkit().createImage("Pikachu.jpg"));
 		this.setTitle("Pokemon");
 		this.containerPanel = new JPanel();
 		this.pPanel = new PokemonPanel(db, this);
@@ -114,7 +108,7 @@ public class Frame extends JFrame {
 		menuBar.add(this.mainMenu);
 		menuBar.add(this.wikiMenu);
 		menuBar.add(this.helpMenu);
-		this.rootPane.setPreferredSize(new Dimension(1260, 720));
+		this.rootPane.setPreferredSize(new Dimension(1260, 800));
 		this.pPanel.setPreferredSize(new Dimension(1230, 720));
 		this.containerPanel.add(this.pPanel);
 		this.containerPanel.add(this.cPanel);

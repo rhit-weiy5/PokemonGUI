@@ -1,7 +1,6 @@
 package Panel;
 
 import Database.DatabaseConnection;
-import Listener.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 public class PokemonPanel extends JPanel {
 
@@ -137,6 +135,7 @@ public class PokemonPanel extends JPanel {
 			}
 			this.pokemonTable = new JTable(rec, header);
 			JScrollPane scrollPane = new JScrollPane(this.pokemonTable);
+
 			this.pokemonTable.setFillsViewportHeight(true);
 			this.pokemonTable.getColumnModel().getColumn(0).setPreferredWidth(50);
 			this.pokemonTable.getColumnModel().getColumn(1).setPreferredWidth(80);
