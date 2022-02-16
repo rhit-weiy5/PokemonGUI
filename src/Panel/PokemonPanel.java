@@ -189,8 +189,8 @@ public class PokemonPanel extends JPanel {
 							stmt.setString(4, (String) tm.getValueAt(pid, c));
 						}
 						System.out.println(s);
-						JOptionPane.showMessageDialog(null, "The specific PID has been successfully update.");
 						stmt.execute();
+						JOptionPane.showMessageDialog(null, "The specific PID has been successfully update.");
 					} catch (SQLException ex) {
 						JOptionPane.showMessageDialog(null, "PID not exists");
 					}
