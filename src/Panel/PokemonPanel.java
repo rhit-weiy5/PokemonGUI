@@ -4,6 +4,8 @@ import Database.DatabaseConnection;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -158,54 +160,66 @@ public class PokemonPanel extends JPanel {
 			TableColumnModel columnModel = pokemonTable.getColumnModel();
 			pokemonTable.setRowSorter(sort);
 
-			this.levelTextField.getDocument().addDocumentListener(new DocumentListener() {
-				public void insertUpdate(DocumentEvent e) {
-					String str = levelTextField.getText();
-					if (str.trim().length() == 0) {
-						sort.setRowFilter(null);
-					} else {
-						// (?i) means case insensitive search
-						sort.setRowFilter(RowFilter.regexFilter("(?i)" + str, 3));
-					}
+			this.pokemonTable.getModel().addTableModelListener(new TableModelListener() {
+				@Override
+				public void tableChanged(TableModelEvent e) {
+					int pid = e.getFirstRow();
+					int c = e.getColumn();
+					System.out.println(c);
+					System.out.println(e.getSource().toString());
+
 				}
 
-				public void removeUpdate(DocumentEvent e) {
-					String str = levelTextField.getText();
-					if (str.trim().length() == 0) {
-						sort.setRowFilter(null);
-					} else {
-						sort.setRowFilter(RowFilter.regexFilter("(?i)" + str, 3));
-					}
-				}
-
-				public void changedUpdate(DocumentEvent e) {
-				}
 			});
 
-
-			this.pidTextField.getDocument().addDocumentListener(new DocumentListener() {
-				public void insertUpdate(DocumentEvent e) {
-					String str = pidTextField.getText();
-					if (str.trim().length() == 0) {
-						sort.setRowFilter(null);
-					} else {
-						// (?i) means case insensitive search
-						sort.setRowFilter(RowFilter.regexFilter("(?i)" + str, 0));
-					}
-				}
-
-				public void removeUpdate(DocumentEvent e) {
-					String str = pidTextField.getText();
-					if (str.trim().length() == 0) {
-						sort.setRowFilter(null);
-					} else {
-						sort.setRowFilter(RowFilter.regexFilter("(?i)" + str, 0));
-					}
-				}
-
-				public void changedUpdate(DocumentEvent e) {
-				}
-			});
+//			this.levelTextField.getDocument().addDocumentListener(new DocumentListener() {
+//				public void insertUpdate(DocumentEvent e) {
+//					String str = levelTextField.getText();
+//					if (str.trim().length() == 0) {
+//						sort.setRowFilter(null);
+//					} else {
+//						// (?i) means case insensitive search
+//						sort.setRowFilter(RowFilter.regexFilter(".*" + str +".*", 3));
+//					}
+//				}
+//
+//				public void removeUpdate(DocumentEvent e) {
+//					String str = levelTextField.getText();
+//					if (str.trim().length() == 0) {
+//						sort.setRowFilter(null);
+//					} else {
+//						sort.setRowFilter(RowFilter.regexFilter(".*" + str + ".*", 3));
+//					}
+//				}
+//
+//				public void changedUpdate(DocumentEvent e) {
+//				}
+//			});
+//
+//
+//			this.pidTextField.getDocument().addDocumentListener(new DocumentListener() {
+//				public void insertUpdate(DocumentEvent e) {
+//					String str = pidTextField.getText();
+//					if (str.trim().length() == 0) {
+//						sort.setRowFilter(null);
+//					} else {
+//						// (?i) means case insensitive search
+//						sort.setRowFilter(RowFilter.regexFilter(".*" + str + ".*", 0));
+//					}
+//				}
+//
+//				public void removeUpdate(DocumentEvent e) {
+//					String str = pidTextField.getText();
+//					if (str.trim().length() == 0) {
+//						sort.setRowFilter(null);
+//					} else {
+//						sort.setRowFilter(RowFilter.regexFilter(".*" + str + ".*", 0));
+//					}
+//				}
+//
+//				public void changedUpdate(DocumentEvent e) {
+//				}
+//			});
 
 			return scrollPane;
 		} catch (SQLException e) {
