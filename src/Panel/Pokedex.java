@@ -1,7 +1,14 @@
 package Panel;
 
 import Database.DatabaseConnection;
+import Listener.PokedexListener;
+
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +18,7 @@ public class Pokedex extends JPanel{
     private DatabaseConnection db = null;
     private JTable dextable = null;
     private JScrollPane sPane;
+    private JTextField searchTextField = null;
 
     public Pokedex(DatabaseConnection db) {
         // TODO Auto-generated constructor stub
@@ -18,6 +26,7 @@ public class Pokedex extends JPanel{
         this.db = db;
         this.sPane = Pokedextable();
         borderLayoutPanel.add(this.sPane, BorderLayout.CENTER);
+        borderLayoutPanel.add(searchTextField, BorderLayout.SOUTH);
         JFrame frame = new JFrame("Pokedex");
         frame.setUndecorated(true);
         frame.getRootPane().setWindowDecorationStyle(JRootPane.WARNING_DIALOG);
@@ -61,6 +70,10 @@ public class Pokedex extends JPanel{
                 public boolean isCellEditable(int row, int column) {
                     return false;
                 }};
+            TableRowSorter<TableModel> sort = new TableRowSorter<>(dextable.getModel());
+            dextable.setRowSorter(sort);
+            this.searchTextField = new JTextField();
+            searchTextField.getDocument().addDocumentListener(new PokedexListener(searchTextField, sort));
             JScrollPane scrollPane = new JScrollPane(this.dextable);
             this.dextable.setFillsViewportHeight(true);
             this.dextable.getColumnModel().getColumn(0).setPreferredWidth(60);
@@ -81,5 +94,4 @@ public class Pokedex extends JPanel{
         }
         return sPane;
     }
-
 }
