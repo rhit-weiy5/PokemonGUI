@@ -49,7 +49,11 @@ public class Ability extends JPanel{
                 rec[index][4]=rs.getString("Gen");
                 index++;
             }
-            this.dextable = new JTable(rec,header);
+            this.dextable = new JTable(rec,header){
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }};
             JScrollPane scrollPane = new JScrollPane(this.dextable);
             this.dextable.setFillsViewportHeight(true);
             this.dextable.getColumnModel().getColumn(0).setPreferredWidth(50);

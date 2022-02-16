@@ -48,7 +48,11 @@ public class Items extends JPanel{
                 rec[index][3]=rs.getString("Effect");
                 index++;
             }
-            this.dextable = new JTable(rec,header);
+            this.dextable = new JTable(rec,header){
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }};
             JScrollPane scrollPane = new JScrollPane(this.dextable);
             this.dextable.setFillsViewportHeight(true);
             this.dextable.setFillsViewportHeight(true);

@@ -56,7 +56,11 @@ public class Pokedex extends JPanel{
                 rec[index][11]=rs.getString("SPE");
                 index++;
             }
-            this.dextable = new JTable(rec,header);
+            this.dextable = new JTable(rec,header){
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }};
             JScrollPane scrollPane = new JScrollPane(this.dextable);
             this.dextable.setFillsViewportHeight(true);
             this.dextable.getColumnModel().getColumn(0).setPreferredWidth(60);

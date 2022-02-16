@@ -127,7 +127,11 @@ public class PokemonPanel extends JPanel {
 				rec[index][14] = rs.getString("SPE");
 				index++;
 			}
-			this.pokemonTable = new JTable(rec, header);
+			this.pokemonTable = new JTable(rec, header){
+				@Override
+				public boolean isCellEditable(int row, int column) {
+					return column == 1 || column==3 || column==5 ? true : false;
+				}};
 			JScrollPane scrollPane = new JScrollPane(this.pokemonTable);
 
 			this.pokemonTable.setFillsViewportHeight(true);

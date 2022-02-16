@@ -54,7 +54,11 @@ public class Moves extends JPanel{
                 rec[index][9]=rs.getString("Prob");
                 index++;
             }
-            this.dextable = new JTable(rec,header);
+            this.dextable = new JTable(rec,header){
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }};
             JScrollPane scrollPane = new JScrollPane(this.dextable);
             this.dextable.setFillsViewportHeight(true);
             this.dextable.getColumnModel().getColumn(0).setPreferredWidth(40);
