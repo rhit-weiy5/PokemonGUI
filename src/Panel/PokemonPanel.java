@@ -2,6 +2,12 @@ package Panel;
 
 import Database.DatabaseConnection;
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -97,8 +103,8 @@ public class PokemonPanel extends JPanel {
 
 			rs = stmt.executeQuery(select);
 
-			String[][] rec = new String[count][15];
-			String[] header = { "PID", "Name", "Gender", "Level", "Nature", "Friendship", "SpecieName", "AbilityName",
+			Object[][] rec = new Object[count][15];
+			Object[] header = { "PID", "Name", "Gender", "Level", "Nature", "Friendship", "SpecieName", "AbilityName",
 					"TrainerName", "HP", "ATK", "DEF", "SPA", "SPD", "SPE" };
 			int index = 0;
 			while (rs.next()) {
@@ -107,31 +113,31 @@ public class PokemonPanel extends JPanel {
 				int iVal = rs.getInt("Pgender");
 				if (rs.wasNull()) {
 					rec[index][2] = "NULL";
-				} else if (iVal == 1){
+				} else if (iVal == 1) {
 					rec[index][2] = "FEMALE";
-				}
-				else{
+				} else {
 					rec[index][2] = "MALE";
 				}
-				rec[index][3] = rs.getString("Level");
+				rec[index][3] = rs.getInt("Level");
 				rec[index][4] = rs.getString("Nature");
-				rec[index][5] = rs.getString("Friendship");
+				rec[index][5] = rs.getInt("Friendship");
 				rec[index][6] = rs.getString("SName");
 				rec[index][7] = rs.getString("AName");
 				rec[index][8] = rs.getString("TName");
-				rec[index][9] = rs.getString("HP");
-				rec[index][10] = rs.getString("ATK");
-				rec[index][11] = rs.getString("DEF");
-				rec[index][12] = rs.getString("SPA");
-				rec[index][13] = rs.getString("SPD");
-				rec[index][14] = rs.getString("SPE");
+				rec[index][9] = rs.getInt("HP");
+				rec[index][10] = rs.getInt("ATK");
+				rec[index][11] = rs.getInt("DEF");
+				rec[index][12] = rs.getInt("SPA");
+				rec[index][13] = rs.getInt("SPD");
+				rec[index][14] = rs.getInt("SPE");
 				index++;
 			}
-			this.pokemonTable = new JTable(rec, header){
+			this.pokemonTable = new JTable(rec, header) {
 				@Override
 				public boolean isCellEditable(int row, int column) {
-					return column == 1 || column==3 || column==5 ? true : false;
-				}};
+					return column == 1 || column == 3 || column == 5 ? true : false;
+				}
+			};
 			JScrollPane scrollPane = new JScrollPane(this.pokemonTable);
 
 			this.pokemonTable.setFillsViewportHeight(true);
@@ -143,6 +149,39 @@ public class PokemonPanel extends JPanel {
 			this.pokemonTable.getColumnModel().getColumn(5).setPreferredWidth(55);
 			this.pokemonTable.getColumnModel().getColumn(6).setPreferredWidth(250);
 			this.pokemonTable.getColumnModel().getColumn(7).setPreferredWidth(100);
+
+//			TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(pokemonTable.getModel());
+//			pokemonTable.setRowSorter(sorter);
+
+			TableRowSorter<TableModel> sort = new TableRowSorter<>(pokemonTable.getModel());
+
+			// set the width of the 3rd column to 200 pixels
+			TableColumnModel columnModel = pokemonTable.getColumnModel();
+			pokemonTable.setRowSorter(sort);
+
+			this.pidTextField.getDocument().addDocumentListener(new DocumentListener() {
+				public void insertUpdate(DocumentEvent e) {
+					String str = pidTextField.getText();
+					if (str.trim().length() == 0) {
+						sort.setRowFilter(null);
+					} else {
+						// (?i) means case insensitive search
+						sort.setRowFilter(RowFilter.regexFilter("(?i)" + str, 0));
+					}
+				}
+
+				public void removeUpdate(DocumentEvent e) {
+					String str = pidTextField.getText();
+					if (str.trim().length() == 0) {
+						sort.setRowFilter(null);
+					} else {
+						sort.setRowFilter(RowFilter.regexFilter("(?i)" + str, 0));
+					}
+				}
+
+				public void changedUpdate(DocumentEvent e) {
+				}
+			});
 
 			return scrollPane;
 		} catch (SQLException e) {
@@ -199,9 +238,9 @@ public class PokemonPanel extends JPanel {
 				// TODO Auto-generated method stub
 				JScrollPane tmp = sPane;
 				if (true) {
-					new PokedexWithFilter(db, pidTextField.getText(), (String)specieComboBox.getSelectedItem(),
-							(String)genderComboBox.getSelectedItem(), levelTextField.getText(),
-							(String)trainerTextField.getSelectedItem());
+					new PokedexWithFilter(db, pidTextField.getText(), (String) specieComboBox.getSelectedItem(),
+							(String) genderComboBox.getSelectedItem(), levelTextField.getText(),
+							(String) trainerTextField.getSelectedItem());
 					tmp.setVisible(false);
 					sPane.setVisible(true);
 				}
