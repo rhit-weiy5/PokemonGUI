@@ -155,9 +155,33 @@ public class PokemonPanel extends JPanel {
 
 			TableRowSorter<TableModel> sort = new TableRowSorter<>(pokemonTable.getModel());
 
-			// set the width of the 3rd column to 200 pixels
 			TableColumnModel columnModel = pokemonTable.getColumnModel();
 			pokemonTable.setRowSorter(sort);
+
+			this.levelTextField.getDocument().addDocumentListener(new DocumentListener() {
+				public void insertUpdate(DocumentEvent e) {
+					String str = levelTextField.getText();
+					if (str.trim().length() == 0) {
+						sort.setRowFilter(null);
+					} else {
+						// (?i) means case insensitive search
+						sort.setRowFilter(RowFilter.regexFilter("(?i)" + str, 3));
+					}
+				}
+
+				public void removeUpdate(DocumentEvent e) {
+					String str = levelTextField.getText();
+					if (str.trim().length() == 0) {
+						sort.setRowFilter(null);
+					} else {
+						sort.setRowFilter(RowFilter.regexFilter("(?i)" + str, 3));
+					}
+				}
+
+				public void changedUpdate(DocumentEvent e) {
+				}
+			});
+
 
 			this.pidTextField.getDocument().addDocumentListener(new DocumentListener() {
 				public void insertUpdate(DocumentEvent e) {
