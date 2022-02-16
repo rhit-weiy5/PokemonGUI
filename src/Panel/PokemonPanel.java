@@ -107,38 +107,40 @@ public class PokemonPanel extends JPanel {
 			rs = stmt.executeQuery(select);
 
 			Object[][] rec = new Object[count][15];
-			Object[] header = { "PID", "Name", "Gender", "Level", "Nature", "Friendship", "SpecieName", "AbilityName",
+//			Object[] header = { "PID", "Name", "Gender", "Level", "Nature", "Friendship", "SpecieName", "AbilityName",
+//					"TrainerName", "HP", "ATK", "DEF", "SPA", "SPD", "SPE" };
+			Object[] header = { "Name", "Gender", "Level", "Nature", "Friendship", "SpecieName", "AbilityName",
 					"TrainerName", "HP", "ATK", "DEF", "SPA", "SPD", "SPE" };
 			int index = 0;
 			while (rs.next()) {
-				rec[index][0] = rs.getString("PID");
-				rec[index][1] = rs.getString("Pname");
+//				rec[index][0] = rs.getString("PID");
+				rec[index][0] = rs.getString("Pname");
 				int iVal = rs.getInt("Pgender");
 				if (rs.wasNull()) {
-					rec[index][2] = "NULL";
+					rec[index][1] = "NULL";
 				} else if (iVal == 1) {
-					rec[index][2] = "FEMALE";
+					rec[index][1] = "FEMALE";
 				} else {
-					rec[index][2] = "MALE";
+					rec[index][1] = "MALE";
 				}
-				rec[index][3] = rs.getInt("Level");
-				rec[index][4] = rs.getString("Nature");
-				rec[index][5] = rs.getInt("Friendship");
-				rec[index][6] = rs.getString("SName");
-				rec[index][7] = rs.getString("AName");
-				rec[index][8] = rs.getString("TName");
-				rec[index][9] = rs.getInt("HP");
-				rec[index][10] = rs.getInt("ATK");
-				rec[index][11] = rs.getInt("DEF");
-				rec[index][12] = rs.getInt("SPA");
-				rec[index][13] = rs.getInt("SPD");
-				rec[index][14] = rs.getInt("SPE");
+				rec[index][2] = rs.getInt("Level");
+				rec[index][3] = rs.getString("Nature");
+				rec[index][4] = rs.getInt("Friendship");
+				rec[index][5] = rs.getString("SName");
+				rec[index][6] = rs.getString("AName");
+				rec[index][7] = rs.getString("TName");
+				rec[index][8] = rs.getInt("HP");
+				rec[index][9] = rs.getInt("ATK");
+				rec[index][10] = rs.getInt("DEF");
+				rec[index][11] = rs.getInt("SPA");
+				rec[index][12] = rs.getInt("SPD");
+				rec[index][13] = rs.getInt("SPE");
 				index++;
 			}
 			this.pokemonTable = new JTable(rec, header) {
 				@Override
 				public boolean isCellEditable(int row, int column) {
-					return column == 1 || column == 3 || column == 5 ? true : false;
+					return column == 0 || column == 2 || column == 4 ? true : false;
 				}
 			};
 			JScrollPane scrollPane = new JScrollPane(this.pokemonTable);
@@ -166,8 +168,8 @@ public class PokemonPanel extends JPanel {
 				public void tableChanged(TableModelEvent e) {
 					int pid = e.getFirstRow();
 					int c = e.getColumn();
-//					System.out.println(c);
-//					System.out.println(tm.getValueAt(pid, c));
+					System.out.println(c);
+					System.out.println(tm.getValueAt(pid, c));
 
 					CallableStatement stmt = null;
 					String s = "{call update_pokemon (@PID = ?, @Name = ?, @LEVEL = ?, @Friendship = ?)}";
@@ -175,19 +177,20 @@ public class PokemonPanel extends JPanel {
 						stmt = db.getConnection().prepareCall(s);
 						stmt.setInt(1, pid);
 
-						if (c == 1) {
+						if (c == 0) {
 							stmt.setString(2, (String) tm.getValueAt(pid, c));
 							stmt.setString(3, null);
 							stmt.setString(4, null);
-						} else if (c == 3) {
+						} else if (c == 2) {
 							stmt.setString(2, null);
 							stmt.setString(3, (String) tm.getValueAt(pid, c));
 							stmt.setString(4, null);
-						} else if (c == 5) {
+						} else if (c == 4) {
 							stmt.setString(2, null);
 							stmt.setString(3, null);
 							stmt.setString(4, (String) tm.getValueAt(pid, c));
 						}
+						System.out.println("pid: " + pid);
 						System.out.println(s);
 						stmt.execute();
 						JOptionPane.showMessageDialog(null, "The specific PID has been successfully update.");
