@@ -13,6 +13,7 @@ import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -165,9 +166,34 @@ public class PokemonPanel extends JPanel {
 				public void tableChanged(TableModelEvent e) {
 					int pid = e.getFirstRow();
 					int c = e.getColumn();
-					System.out.println(c);
-					System.out.println(tm.getValueAt(pid, c));
+//					System.out.println(c);
+//					System.out.println(tm.getValueAt(pid, c));
 
+					CallableStatement stmt = null;
+					String s = "{call update_pokemon (@PID = ?, @Name = ?, @LEVEL = ?, @Friendship = ?)}";
+					try {
+						stmt = db.getConnection().prepareCall(s);
+						stmt.setInt(1, pid);
+
+						if (c == 1) {
+							stmt.setString(2, (String) tm.getValueAt(pid, c));
+							stmt.setString(3, null);
+							stmt.setString(4, null);
+						} else if (c == 3) {
+							stmt.setString(2, null);
+							stmt.setString(3, (String) tm.getValueAt(pid, c));
+							stmt.setString(4, null);
+						} else if (c == 5) {
+							stmt.setString(2, null);
+							stmt.setString(3, null);
+							stmt.setString(4, (String) tm.getValueAt(pid, c));
+						}
+						System.out.println(s);
+						JOptionPane.showMessageDialog(null, "The specific PID has been successfully update.");
+						stmt.execute();
+					} catch (SQLException ex) {
+						JOptionPane.showMessageDialog(null, "PID not exists");
+					}
 
 				}
 
