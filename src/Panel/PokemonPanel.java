@@ -159,14 +159,15 @@ public class PokemonPanel extends JPanel {
 
 			TableColumnModel columnModel = pokemonTable.getColumnModel();
 			pokemonTable.setRowSorter(sort);
-
+			TableModel tm = this.pokemonTable.getModel();
 			this.pokemonTable.getModel().addTableModelListener(new TableModelListener() {
 				@Override
 				public void tableChanged(TableModelEvent e) {
 					int pid = e.getFirstRow();
 					int c = e.getColumn();
 					System.out.println(c);
-					System.out.println(e.getSource().toString());
+					System.out.println(tm.getValueAt(pid, c));
+
 
 				}
 

@@ -113,7 +113,7 @@ public class Frame extends JFrame {
 		this.containerPanel.add(this.pPanel);
 		this.containerPanel.add(this.cPanel);
 		this.containerPanel.add(this.hPanel);
-		System.out.println(this);
+		//System.out.println(this);
 		this.add(menuBar, "North");
 		this.add(this.containerPanel, "Center");
 		this.add(new JLabel("  This GUI is made by Qijun Jiang, James Li and Yunzhe Wei"), "South");
