@@ -1,6 +1,8 @@
 package Panel;
 
 import Database.DatabaseConnection;
+import Listener.DeletePokemon;
+
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -9,7 +11,6 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,6 +29,7 @@ public class PokemonPanel extends JPanel {
 	private JComboBox<String> trainerTextField = null;
 	private JPanel filterPanel = null;
 	private JButton filterButton = null;
+	private JButton deleteButton = null;
 	private JTable pokemonTable = null;
 	private JScrollPane sPane;
 	private DatabaseConnection db = null;
@@ -37,6 +39,9 @@ public class PokemonPanel extends JPanel {
 		this.db = db;
 		this.filterPanel = generateFilterUiItems();
 		this.sPane = generatePokemonTable();
+		this.deleteButton = new JButton("Delete");
+		this.deleteButton.addActionListener(new DeletePokemon(this.pokemonTable));
+		this.filterPanel.add(deleteButton);
 		this.setLayout(new BorderLayout());
 		this.add(filterPanel, "North");
 		this.add(sPane, "Center");
@@ -108,8 +113,6 @@ public class PokemonPanel extends JPanel {
 			rs = stmt.executeQuery(select);
 
 			Object[][] rec = new Object[count][15];
-//			Object[] header = { "PID", "Name", "Gender", "Level", "Nature", "Friendship", "SpecieName", "AbilityName",
-//					"TrainerName", "HP", "ATK", "DEF", "SPA", "SPD", "SPE" };
 			Object[] header = { "Name", "Gender", "Level", "Nature", "Friendship", "SpecieName", "AbilityName", "ItemName",
 					"TrainerName", "HP", "ATK", "DEF", "SPA", "SPD", "SPE" };
 			int index = 0;
@@ -158,19 +161,6 @@ public class PokemonPanel extends JPanel {
 			this.pokemonTable.getColumnModel().getColumn(8).setPreferredWidth(100);
 			pokemonTable.setAutoCreateRowSorter(true);
 			TableRowSorter<TableModel> sort = new TableRowSorter<>(pokemonTable.getModel());
-			sort.setComparator(0, new Comparator()
-			{
-				@Override
-				public int compare(Object o1, Object o2) {
-					try{
-						int a = Integer.parseInt(o1.toString());
-						int b = Integer.parseInt(o2.toString());
-						return a-b;
-					}catch(NumberFormatException e){
-						return 0;
-					}
-				}
-			});
 
 			TableColumnModel columnModel = pokemonTable.getColumnModel();
 			pokemonTable.setRowSorter(sort);
@@ -180,8 +170,8 @@ public class PokemonPanel extends JPanel {
 				public void tableChanged(TableModelEvent e) {
 					int pid = e.getFirstRow();
 					int c = e.getColumn();
-					System.out.println(c);
-					System.out.println(tm.getValueAt(pid, c));
+//					System.out.println(c);
+//					System.out.println(tm.getValueAt(pid, c));
 
 					CallableStatement stmt = null;
 					String s = "{call update_pokemon (@PID = ?, @Name = ?, @LEVEL = ?, @Friendship = ?)}";
@@ -202,8 +192,8 @@ public class PokemonPanel extends JPanel {
 							stmt.setString(3, null);
 							stmt.setString(4, (String) tm.getValueAt(pid, c));
 						}
-						System.out.println("pid: " + pid);
-						System.out.println(s);
+//						System.out.println("pid: " + pid);
+//						System.out.println(s);
 						stmt.execute();
 						JOptionPane.showMessageDialog(null, "The specific PID has been successfully update.");
 					} catch (SQLException ex) {
@@ -214,54 +204,54 @@ public class PokemonPanel extends JPanel {
 
 			});
 
-//			this.levelTextField.getDocument().addDocumentListener(new DocumentListener() {
-//				public void insertUpdate(DocumentEvent e) {
-//					String str = levelTextField.getText();
-//					if (str.trim().length() == 0) {
-//						sort.setRowFilter(null);
-//					} else {
-//						// (?i) means case insensitive search
-//						sort.setRowFilter(RowFilter.regexFilter(".*" + str +".*", 3));
-//					}
-//				}
-//
-//				public void removeUpdate(DocumentEvent e) {
-//					String str = levelTextField.getText();
-//					if (str.trim().length() == 0) {
-//						sort.setRowFilter(null);
-//					} else {
-//						sort.setRowFilter(RowFilter.regexFilter(".*" + str + ".*", 3));
-//					}
-//				}
-//
-//				public void changedUpdate(DocumentEvent e) {
-//				}
-//			});
-//
-//
-//			this.pidTextField.getDocument().addDocumentListener(new DocumentListener() {
-//				public void insertUpdate(DocumentEvent e) {
-//					String str = pidTextField.getText();
-//					if (str.trim().length() == 0) {
-//						sort.setRowFilter(null);
-//					} else {
-//						// (?i) means case insensitive search
-//						sort.setRowFilter(RowFilter.regexFilter(".*" + str + ".*", 0));
-//					}
-//				}
-//
-//				public void removeUpdate(DocumentEvent e) {
-//					String str = pidTextField.getText();
-//					if (str.trim().length() == 0) {
-//						sort.setRowFilter(null);
-//					} else {
-//						sort.setRowFilter(RowFilter.regexFilter(".*" + str + ".*", 0));
-//					}
-//				}
-//
-//				public void changedUpdate(DocumentEvent e) {
-//				}
-//			});
+			this.levelTextField.getDocument().addDocumentListener(new DocumentListener() {
+				public void insertUpdate(DocumentEvent e) {
+					String str = levelTextField.getText();
+					if (str.trim().length() == 0) {
+						sort.setRowFilter(null);
+					} else {
+						// (?i) means case insensitive search
+						sort.setRowFilter(RowFilter.regexFilter(".*" + str +".*", 3));
+					}
+				}
+
+				public void removeUpdate(DocumentEvent e) {
+					String str = levelTextField.getText();
+					if (str.trim().length() == 0) {
+						sort.setRowFilter(null);
+					} else {
+						sort.setRowFilter(RowFilter.regexFilter(".*" + str + ".*", 3));
+					}
+				}
+
+				public void changedUpdate(DocumentEvent e) {
+				}
+			});
+
+
+			this.pidTextField.getDocument().addDocumentListener(new DocumentListener() {
+				public void insertUpdate(DocumentEvent e) {
+					String str = pidTextField.getText();
+					if (str.trim().length() == 0) {
+						sort.setRowFilter(null);
+					} else {
+						// (?i) means case insensitive search
+						sort.setRowFilter(RowFilter.regexFilter(".*" + str + ".*", 0));
+					}
+				}
+
+				public void removeUpdate(DocumentEvent e) {
+					String str = pidTextField.getText();
+					if (str.trim().length() == 0) {
+						sort.setRowFilter(null);
+					} else {
+						sort.setRowFilter(RowFilter.regexFilter(".*" + str + ".*", 0));
+					}
+				}
+
+				public void changedUpdate(DocumentEvent e) {
+				}
+			});
 
 			return scrollPane;
 		} catch (SQLException e) {
@@ -287,6 +277,8 @@ public class PokemonPanel extends JPanel {
 		this.genderComboBox = new JComboBox<>();
 		this.levelTextField = new JTextField();
 		this.trainerTextField = new JComboBox<>();
+		this.pokemonTable = new JTable();
+
 		getSpecie();
 		getTrainer();
 		this.genderComboBox.addItem("None");
@@ -337,21 +329,8 @@ public class PokemonPanel extends JPanel {
 			}
 		});
 
-//		ActionListener filterListener = new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				// TODO Auto-generated method stub
-//				sPane = generatePokemonTable();
-//				System.out.println("I was clicked");
-//				fr.invalidate();
-//				fr.validate();
-//				fr.repaint();
-//				System.out.println(fr);
-//			}
-//		};
-//		filterButton.addActionListener(filterListener);
 		fPanel.add(this.filterButton);
+
 		return fPanel;
 	}
 
@@ -367,6 +346,7 @@ public class PokemonPanel extends JPanel {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	public void getTrainer() {
@@ -384,3 +364,19 @@ public class PokemonPanel extends JPanel {
 		}
 	}
 }
+
+
+//		ActionListener filterListener = new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				// TODO Auto-generated method stub
+//				sPane = generatePokemonTable();
+//				System.out.println("I was clicked");
+//				fr.invalidate();
+//				fr.validate();
+//				fr.repaint();
+//				System.out.println(fr);
+//			}
+//		};
+//		filterButton.addActionListener(filterListener);
