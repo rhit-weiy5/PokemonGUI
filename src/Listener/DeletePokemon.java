@@ -26,8 +26,8 @@ public class DeletePokemon implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         int i = this.PokemonTable.getSelectedRow();
-        System.out.println(i);
-        System.out.println("pid:" + model.getDataVector().get(0));
+        //System.out.println(i);
+        //System.out.println("pid:" + model.getDataVector().get(0));
         int pidToRemove = (pid.get(i));
         delete(pidToRemove, i);
         model.removeRow(i);
@@ -41,7 +41,7 @@ public class DeletePokemon implements ActionListener {
             stmt.setInt(1, pidToRemove);
             stmt.execute();
             JOptionPane.showMessageDialog(null, "The specific PID has been deleted.");
-            System.out.println(i);
+            //System.out.println(i);
             pid.remove(i);
 
             return true;
