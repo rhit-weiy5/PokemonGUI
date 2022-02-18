@@ -17,6 +17,8 @@ public class DeletePokemon implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         int i = this.PokemonTable.getSelectedRow();
         System.out.println(i);
+        System.out.println("pid:" + model.getDataVector().get(0));
         model.removeRow(i);
+        JOptionPane.showMessageDialog(null,"Sucessful Deleted");
     }
 }
