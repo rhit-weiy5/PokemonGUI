@@ -17,6 +17,7 @@ import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Comparator;
 
 public class PokemonPanel extends JPanel {
 
@@ -109,7 +110,7 @@ public class PokemonPanel extends JPanel {
 			Object[][] rec = new Object[count][15];
 //			Object[] header = { "PID", "Name", "Gender", "Level", "Nature", "Friendship", "SpecieName", "AbilityName",
 //					"TrainerName", "HP", "ATK", "DEF", "SPA", "SPD", "SPE" };
-			Object[] header = { "Name", "Gender", "Level", "Nature", "Friendship", "SpecieName", "AbilityName",
+			Object[] header = { "Name", "Gender", "Level", "Nature", "Friendship", "SpecieName", "AbilityName", "ItemName",
 					"TrainerName", "HP", "ATK", "DEF", "SPA", "SPD", "SPE" };
 			int index = 0;
 			while (rs.next()) {
@@ -128,13 +129,14 @@ public class PokemonPanel extends JPanel {
 				rec[index][4] = rs.getInt("Friendship");
 				rec[index][5] = rs.getString("SName");
 				rec[index][6] = rs.getString("AName");
-				rec[index][7] = rs.getString("TName");
-				rec[index][8] = rs.getInt("HP");
-				rec[index][9] = rs.getInt("ATK");
-				rec[index][10] = rs.getInt("DEF");
-				rec[index][11] = rs.getInt("SPA");
-				rec[index][12] = rs.getInt("SPD");
-				rec[index][13] = rs.getInt("SPE");
+				rec[index][7] = rs.getString("IName");
+				rec[index][8] = rs.getString("TName");
+				rec[index][9] = rs.getInt("HP");
+				rec[index][10] = rs.getInt("ATK");
+				rec[index][11] = rs.getInt("DEF");
+				rec[index][12] = rs.getInt("SPA");
+				rec[index][13] = rs.getInt("SPD");
+				rec[index][14] = rs.getInt("SPE");
 				index++;
 			}
 			this.pokemonTable = new JTable(rec, header) {
@@ -146,19 +148,30 @@ public class PokemonPanel extends JPanel {
 			JScrollPane scrollPane = new JScrollPane(this.pokemonTable);
 
 			this.pokemonTable.setFillsViewportHeight(true);
-			this.pokemonTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+			this.pokemonTable.getColumnModel().getColumn(0).setPreferredWidth(80);
 			this.pokemonTable.getColumnModel().getColumn(1).setPreferredWidth(80);
-			this.pokemonTable.getColumnModel().getColumn(2).setPreferredWidth(80);
-			this.pokemonTable.getColumnModel().getColumn(3).setPreferredWidth(50);
+			this.pokemonTable.getColumnModel().getColumn(2).setPreferredWidth(50);
+			this.pokemonTable.getColumnModel().getColumn(3).setPreferredWidth(55);
 			this.pokemonTable.getColumnModel().getColumn(4).setPreferredWidth(55);
-			this.pokemonTable.getColumnModel().getColumn(5).setPreferredWidth(55);
-			this.pokemonTable.getColumnModel().getColumn(6).setPreferredWidth(250);
+			this.pokemonTable.getColumnModel().getColumn(5).setPreferredWidth(250);
+			this.pokemonTable.getColumnModel().getColumn(6).setPreferredWidth(100);
 			this.pokemonTable.getColumnModel().getColumn(7).setPreferredWidth(100);
-
-//			TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(pokemonTable.getModel());
-//			pokemonTable.setRowSorter(sorter);
-
+			this.pokemonTable.getColumnModel().getColumn(8).setPreferredWidth(100);
+			pokemonTable.setAutoCreateRowSorter(true);
 			TableRowSorter<TableModel> sort = new TableRowSorter<>(pokemonTable.getModel());
+			sort.setComparator(0, new Comparator()
+			{
+				@Override
+				public int compare(Object o1, Object o2) {
+					try{
+						int a = Integer.parseInt(o1.toString());
+						int b = Integer.parseInt(o2.toString());
+						return a-b;
+					}catch(NumberFormatException e){
+						return 0;
+					}
+				}
+			});
 
 			TableColumnModel columnModel = pokemonTable.getColumnModel();
 			pokemonTable.setRowSorter(sort);
