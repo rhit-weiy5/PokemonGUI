@@ -114,7 +114,6 @@ public class PokemonPanel extends JPanel {
 					"TrainerName", "HP", "ATK", "DEF", "SPA", "SPD", "SPE" };
 			int index = 0;
 			while (rs.next()) {
-//				rec[index][0] = rs.getString("PID");
 				rec[index][0] = rs.getString("Pname");
 				int iVal = rs.getInt("Pgender");
 				if (rs.wasNull()) {
@@ -124,19 +123,19 @@ public class PokemonPanel extends JPanel {
 				} else {
 					rec[index][1] = "MALE";
 				}
-				rec[index][2] = rs.getInt("Level");
+				rec[index][2] = parse(rs.getString("Level"));
 				rec[index][3] = rs.getString("Nature");
-				rec[index][4] = rs.getInt("Friendship");
+				rec[index][4] = parse(rs.getString("Friendship"));
 				rec[index][5] = rs.getString("SName");
 				rec[index][6] = rs.getString("AName");
 				rec[index][7] = rs.getString("IName");
 				rec[index][8] = rs.getString("TName");
-				rec[index][9] = rs.getInt("HP");
-				rec[index][10] = rs.getInt("ATK");
-				rec[index][11] = rs.getInt("DEF");
-				rec[index][12] = rs.getInt("SPA");
-				rec[index][13] = rs.getInt("SPD");
-				rec[index][14] = rs.getInt("SPE");
+				rec[index][9] = parse(rs.getString("HP"));
+				rec[index][10] = parse(rs.getString("ATK"));
+				rec[index][11] = parse(rs.getString("DEF"));
+				rec[index][12] = parse(rs.getString("SPA"));
+				rec[index][13] = parse(rs.getString("SPD"));
+				rec[index][14] = parse(rs.getString("SPE"));
 				index++;
 			}
 			this.pokemonTable = new JTable(rec, header) {
@@ -269,6 +268,16 @@ public class PokemonPanel extends JPanel {
 			e.printStackTrace();
 		}
 		return sPane;
+	}
+
+	private static String parse(String s){
+		if (s.length() == 1){
+			s = "00" + s;
+		}
+		if (s.length() == 2){
+			s = "0" + s;
+		}
+		return s;
 	}
 
 	private JPanel generateFilterUiItems() {

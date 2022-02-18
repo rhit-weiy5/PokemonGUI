@@ -56,13 +56,13 @@ public class Pokedex extends JPanel{
                 rec[index][2]=rs.getString("Name");
                 rec[index][3]=rs.getString("Type1");
                 rec[index][4]=rs.getString("Type2");
-                rec[index][5]=rs.getString("Total");
-                rec[index][6]=rs.getString("HP");
-                rec[index][7]=rs.getString("ATK");
-                rec[index][8]=rs.getString("DEF");
-                rec[index][9]=rs.getString("SPA");
-                rec[index][10]=rs.getString("SPD");
-                rec[index][11]=rs.getString("SPE");
+                rec[index][5]=parse(rs.getString("Total"));
+                rec[index][6]=parse(rs.getString("HP"));
+                rec[index][7]=parse(rs.getString("ATK"));
+                rec[index][8]=parse(rs.getString("DEF"));
+                rec[index][9]=parse(rs.getString("SPA"));
+                rec[index][10]=parse(rs.getString("SPD"));
+                rec[index][11]=parse(rs.getString("SPE"));
                 index++;
             }
             this.dextable = new JTable(rec,header){
@@ -93,5 +93,15 @@ public class Pokedex extends JPanel{
             e.printStackTrace();
         }
         return sPane;
+    }
+
+    private static String parse(String s){
+        if (s.length() == 1){
+            s = "00" + s;
+        }
+        if (s.length() == 2){
+            s = "0" + s;
+        }
+        return s;
     }
 }
