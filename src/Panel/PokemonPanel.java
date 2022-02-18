@@ -19,6 +19,7 @@ import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 public class PokemonPanel extends JPanel {
@@ -36,6 +37,7 @@ public class PokemonPanel extends JPanel {
 	private DatabaseConnection db = null;
 	private Frame fr;
 	private DefaultTableModel model;
+	private ArrayList<Integer> pid;
 
 	public PokemonPanel(DatabaseConnection db, Frame fr) {
 		this.db = db;
@@ -43,7 +45,7 @@ public class PokemonPanel extends JPanel {
 		this.sPane = generatePokemonTable();
 
 		this.deleteButton = new JButton("Delete");
-		this.deleteButton.addActionListener(new DeletePokemon(this.pokemonTable, this.model));
+		this.deleteButton.addActionListener(new DeletePokemon(this.pokemonTable, this.model, this.pid, this.db));
 		this.filterPanel.add(deleteButton);
 
 		this.setLayout(new BorderLayout());
@@ -119,8 +121,11 @@ public class PokemonPanel extends JPanel {
 			Object[][] rec = new Object[count][15];
 			Object[] header = { "Name", "Gender", "Level", "Nature", "Friendship", "SpecieName", "AbilityName", "ItemName",
 					"TrainerName", "HP", "ATK", "DEF", "SPA", "SPD", "SPE" };
+			this.pid = new ArrayList<Integer>();
 			int index = 0;
 			while (rs.next()) {
+				pid.add(rs.getInt("PID"));
+				//System.out.println(pid[index]);
 				rec[index][0] = rs.getString("Pname");
 				int iVal = rs.getInt("Pgender");
 				if (rs.wasNull()) {
