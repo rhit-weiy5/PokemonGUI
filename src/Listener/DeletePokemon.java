@@ -8,12 +8,15 @@ import java.awt.event.ActionListener;
 public class DeletePokemon implements ActionListener {
 
     private JTable PokemonTable = null;
-    public DeletePokemon(JTable PokemonTable){
+    private DefaultTableModel model = null;
+    public DeletePokemon(JTable PokemonTable, DefaultTableModel model){
         this.PokemonTable = PokemonTable;
+        this.model = model;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
         int i = this.PokemonTable.getSelectedRow();
-        ((DefaultTableModel)PokemonTable.getModel()).removeRow(i);
+        System.out.println(i);
+        model.removeRow(i);
     }
 }

@@ -8,6 +8,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -34,14 +35,17 @@ public class PokemonPanel extends JPanel {
 	private JScrollPane sPane;
 	private DatabaseConnection db = null;
 	private Frame fr;
+	private DefaultTableModel model;
 
 	public PokemonPanel(DatabaseConnection db, Frame fr) {
 		this.db = db;
 		this.filterPanel = generateFilterUiItems();
 		this.sPane = generatePokemonTable();
+
 		this.deleteButton = new JButton("Delete");
-		this.deleteButton.addActionListener(new DeletePokemon(this.pokemonTable));
+		this.deleteButton.addActionListener(new DeletePokemon(this.pokemonTable, this.model));
 		this.filterPanel.add(deleteButton);
+
 		this.setLayout(new BorderLayout());
 		this.add(filterPanel, "North");
 		this.add(sPane, "Center");
@@ -141,12 +145,19 @@ public class PokemonPanel extends JPanel {
 				rec[index][14] = parse(rs.getString("SPE"));
 				index++;
 			}
-			this.pokemonTable = new JTable(rec, header) {
+			this.model = new DefaultTableModel(rec, header);
+			this.pokemonTable = new JTable(model){
 				@Override
 				public boolean isCellEditable(int row, int column) {
 					return column == 0 || column == 2 || column == 4 ? true : false;
 				}
 			};
+//			this.pokemonTable = new JTable(rec, header) {
+//				@Override
+//				public boolean isCellEditable(int row, int column) {
+//					return column == 0 || column == 2 || column == 4 ? true : false;
+//				}
+//			};
 			JScrollPane scrollPane = new JScrollPane(this.pokemonTable);
 
 			this.pokemonTable.setFillsViewportHeight(true);
