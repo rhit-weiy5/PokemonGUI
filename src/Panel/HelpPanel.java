@@ -16,7 +16,7 @@ public class HelpPanel extends JPanel {
         titleLabel.setFont(new Font("Calibri", Font.BOLD, 30));
         this.textLabel1 = new JLabel("Help to Find the Pokemon you want");
         this.textContent1 = new JTextArea("Go the pokemon list window. Initially this window will show you all the Pokemon.\n" +
-                "To get the Pokemon you want, use the filters and click search.");
+                "To get the Pokemon you want, use the filters.");
         this.textLabel2 = new JLabel("About the Wiki");
         this.textContent2 = new JTextArea("Our wiki provides the statistics of all the species and forms, all the items, all the moves and all the abilities.\n" +
                 "To look at the information you want, go to the drop down menu wiki and select the page you want."
