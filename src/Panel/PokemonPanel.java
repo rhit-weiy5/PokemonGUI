@@ -184,7 +184,9 @@ public class PokemonPanel extends JPanel {
 			this.pokemonTable.getModel().addTableModelListener(new TableModelListener() {
 				@Override
 				public void tableChanged(TableModelEvent e) {
-					int pid = e.getFirstRow();
+					int r = e.getFirstRow();
+					int pid1 = pid.get(r);
+//					System.out.println("Current:" + pid1);
 					int c = e.getColumn();
 //					System.out.println(c);
 //					System.out.println(tm.getValueAt(pid, c));
@@ -193,20 +195,20 @@ public class PokemonPanel extends JPanel {
 					String s = "{call update_pokemon (@PID = ?, @Name = ?, @LEVEL = ?, @Friendship = ?)}";
 					try {
 						stmt = db.getConnection().prepareCall(s);
-						stmt.setInt(1, pid);
+						stmt.setInt(1, pid1);
 
 						if (c == 0) {
-							stmt.setString(2, (String) tm.getValueAt(pid, c));
+							stmt.setString(2, (String) tm.getValueAt(r, c));
 							stmt.setString(3, null);
 							stmt.setString(4, null);
 						} else if (c == 2) {
 							stmt.setString(2, null);
-							stmt.setString(3, (String) tm.getValueAt(pid, c));
+							stmt.setString(3, (String) tm.getValueAt(r, c));
 							stmt.setString(4, null);
 						} else if (c == 4) {
 							stmt.setString(2, null);
 							stmt.setString(3, null);
-							stmt.setString(4, (String) tm.getValueAt(pid, c));
+							stmt.setString(4, (String) tm.getValueAt(r, c));
 						}
 //						System.out.println("pid: " + pid);
 //						System.out.println(s);

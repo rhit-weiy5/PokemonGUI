@@ -42,7 +42,10 @@ public class DeletePokemon implements ActionListener {
             stmt.execute();
             JOptionPane.showMessageDialog(null, "The specific PID has been deleted.");
             //System.out.println(i);
+//            System.out.println("Removed:" + i);
+//            System.out.println("Remove PID:" + pid.get(i));
             pid.remove(i);
+
 
             return true;
 
